@@ -29,42 +29,52 @@ class Users extends CI_Controller {
             $this->add();
         }
     */
+    /**
+     * aici este finctia  de adaugarea a utilizatorului in baza de date la
+     * moment  datele sunt introduse direct in cod, forma este in curs de creare
+     */
 	public function add() 
         {
         $data['id'] = "2";
-	$data['name'] = "sergiu4";
-        $data['surname'] ="Gordienco4";
-        $data['nick'] = "S3";
+	$data['name'] = "Alexandru";
+        $data['surname'] ="Plotnic";
+        $data['nick'] = "ae";
         
         $this-> load -> model('users_model');
-        // $this-> users_model-> add($name);
-        $this->load -> library('form_validation');
+        $this-> users_model-> add($data);
+        //$this->load -> library('form_validation');
         // $this->form_validation->set_rulse('name');
-        if($this->form_validation->run() == FALSE){
+       // if($this->form_validation->run() == FALSE){
             
         
-        $this->load->view('add_index', array ($data));
+        //$this->load->view('add_index', array ($data));
+       // }
+       // else
+       // {
+         //  $id = $this-> input -> post('id');
+         //  $this->users_model->add($id);
+         //  $name = $this-> input -> post('name');
+         //  $this->users_model->add($name);
+        //   $surname = $this-> input -> post('surname');
+         //  $this->users_model->add($surname);
+        //   $nick = $this-> input -> post('nick');
+         //  $this->users_model->add($nick);
+        //}
         }
-        else
-        {
-           $id = $this-> input -> post('id');
-           $this->users_model->add($id);
-           $name = $this-> input -> post('name');
-           $this->users_model->add($name);
-           $surname = $this-> input -> post('surname');
-           $this->users_model->add($surname);
-           $nick = $this-> input -> post('nick');
-           $this->users_model->add($nick);
-        }
-        }
-
+/**
+ * 
+ * @param type $id se va sterge utilizatorul dupa id sau
+ * este functia delete 
+ */
 	public function delete($id) 
         {
         $this-> load -> model('users_model');
         $this-> users_model-> delete($id);
                 
 	}
-
+/**
+ * aceasta functie face inlocuirea datelor un utilizator isi schimba nick pe altul
+ */
 	public function update() 
                 {
 	$data['id'] = "4";
@@ -74,7 +84,10 @@ class Users extends CI_Controller {
         $this-> load -> model('users_model');
         $this-> users_model-> update($data);
                 }
-                
+                /**
+                 * este insashi afisarea datelor chind intram pe test.local 
+                 * este afisati toti utilizatori a bd
+                 */
         public function articles()
                 {
            $this->load->library('pagination');

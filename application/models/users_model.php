@@ -10,13 +10,13 @@ class users_model extends CI_Model {
        return $query->result_array();
     }
 	
-    function add($name)
+    function add($data)
     {
-        $data = array('id' => $id , name => $name, 'surname' => $surname, 'nick' => $nick);
-        $str = $this->db->insert_string('users', $data);
-        $str1 ="INSERT INTO table_name (id , name, surname, nick) VALUES ('id', 'Rick', 'lala', 'la')";
-        $this->load->view('add_index', $data);
-        //$this->db -> insert('users',$data);
+       // $data = array('id' => $id , name => $name, 'surname' => $surname, 'nick' => $nick);
+      //  $str = $this->db->insert_string('users', $data);
+       // $str1 ="INSERT INTO table_name (id , name, surname, nick) VALUES ('id', 'Rick', 'lala', 'la')";
+       // $this->load->view('add_index', $data);
+        $this->db->insert('users',$data);
         //$query_str = "INSERT INTO users (name) VALUES(?)";
         //$this->db->insert('users', array('name'=>'?'));
         
