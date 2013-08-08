@@ -12,11 +12,14 @@ class users_model extends CI_Model {
 	
     function add($name)
     {
+        $data = array('name' => $name, 'surname' => $surname, 'nick' => $nick);
+        $str = $this->db->insert_string('users', $data);
+        "INSERT INTO table_name (name, surname, nick) VALUES ('Rick', 'lala', 'la')";
         //$this->db -> insert('users',$data);
-        $query_str = "INSERT INTO users (name) VALUES(?)";
-        $this->db->query($query_str, array($name));
+        //$query_str = "INSERT INTO users (name) VALUES(?)";
+        //$this->db->insert('users', array('name'=>'?'));
         
-       }
+    }
 
     function update ($data)
     {

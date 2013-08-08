@@ -31,15 +31,15 @@ class Users extends CI_Controller {
     
 	public function add() 
         {
-      //  $data['id'] = "2";
+        //$data['id'] = "2";
 	//$data['name'] = "sergiu4";
-       // $data['surname'] ="Gordienco4";
-       // $data['nick'] = "S3";
+        //$data['surname'] ="Gordienco4";
+        //$data['nick'] = "S3";
         
         $this-> load -> model('users_model');
-        $this-> users_model-> add($data);
+        // $this-> users_model-> add($name);
         $this->load -> library('form_validation');
-        $this->form_validation->set_rulse('name');
+        // $this->form_validation->set_rulse('name');
         if($this->form_validation->run() == FALSE){
             
         
@@ -49,6 +49,10 @@ class Users extends CI_Controller {
         {
            $name = $this-> input -> post('name');
            $this->users_model->add($name);
+           $surname = $this-> input -> post('surname');
+           $this->users_model->add($surname);
+           $nick = $this-> input -> post('nick');
+           $this->users_model->add($nick);
         }
         }
 

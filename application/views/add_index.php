@@ -11,13 +11,14 @@
 
 
     <?php
-    echo form_open($base_url . 'users/add');
+    echo form_open($base_url . '');
     
-    $username = array (
+    $username = array 
+        (
         'name' => 'name',
         'surname' => 'surname',
         'nick' => 'nick'
-    );
+        );
     
     ?>
     <ul>
