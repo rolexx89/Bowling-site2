@@ -17,7 +17,7 @@ class Users extends CI_Controller {
 	 * map to /index.php/game/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-        function User()
+        /**function User()
         {
             parent::Controller();
             
@@ -28,13 +28,13 @@ class Users extends CI_Controller {
         {
             $this->add();
         }
-    
+    */
 	public function add() 
         {
-        //$data['id'] = "2";
-	//$data['name'] = "sergiu4";
-        //$data['surname'] ="Gordienco4";
-        //$data['nick'] = "S3";
+        $data['id'] = "2";
+	$data['name'] = "sergiu4";
+        $data['surname'] ="Gordienco4";
+        $data['nick'] = "S3";
         
         $this-> load -> model('users_model');
         // $this-> users_model-> add($name);
@@ -43,10 +43,12 @@ class Users extends CI_Controller {
         if($this->form_validation->run() == FALSE){
             
         
-        $this->load->view('add_index', $this->view_data);
+        $this->load->view('add_index', array ($data));
         }
         else
         {
+           $id = $this-> input -> post('id');
+           $this->users_model->add($id);
            $name = $this-> input -> post('name');
            $this->users_model->add($name);
            $surname = $this-> input -> post('surname');

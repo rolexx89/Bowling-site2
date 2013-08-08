@@ -10,11 +10,11 @@
 
 
 
-    <?php
-    echo form_open($base_url . '');
+    <?php echo form_open();
     
     $username = array 
         (
+        'id' => 'id',
         'name' => 'name',
         'surname' => 'surname',
         'nick' => 'nick'
@@ -25,13 +25,16 @@
         <li>
             <label> Username </label>
             <div>
-                <?php echo form_input($username); ?>
+              <b>  <?php echo form_input('id'); ?> ID </b> </br>
+              <b>  <?php echo form_input('name'); ?> name </b> </br>
+              <b>  <?php echo form_input('surname'); ?> surname</b> </br>
+              <b>  <?php echo form_input('nick'); ?> </b> </br>
             </div>
         </li>
         
         <li>
             <div>
-                <?php echo form_submit(array('name'=> 'add'),'Register'); ?>
+                <?php echo form_submit(array('id','name','surname','nick'=> 'add'),'Register'); ?>
             </div>
         </li>
     </ul>
