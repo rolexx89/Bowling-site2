@@ -9,6 +9,7 @@ class Pages extends CI_Controller {
         parent::__construct();
         $this->load->model('pages_model');
         $this->load->model('all_users');
+        $this->load->library('captcha_lib');
     }
 
     function Pages() {
@@ -28,8 +29,19 @@ class Pages extends CI_Controller {
         //afisheaza doar dupa un id 
         $data ['main_info'] = $this->pages_model->get($id); //tot araiul va fi doar pe o pagina
 
+        
+        
         switch ($id) {
-            case '2':   //dupa id putem afisha orce utilizator si toate datele din bd
+         //   case 'user'
+             //   $data ['fail_captcha']= '';
+        //$data ['success_user']= '';
+           //     $data ['user_list']= $this->users_model->get_by($id);
+           //     $name = 'pages/user';
+           //     $this->display_lib->users_page($data,$name);
+           // break;
+        
+        
+            case 'all':   //dupa id putem afisha orce utilizator si toate datele din bd
                 $name = 'pages/pages';
 
                 $this->display_lib->users_page($data, $name);
@@ -38,18 +50,18 @@ class Pages extends CI_Controller {
                
             //pagina filed
             case 'filed':
-                $this->load->library('captcha_lib');
+              
+                
                 //butonul nu este tastat pentru transmite
                 
-                if (!isset($_POST['send_message']))
+                if ( ! isset($_POST['send_message']))
                 {
                     $data['imgcode'] = $this->captcha_lib->captcha_actions();
                     $data['info'] = '';
                     
                     $name= 'pages/filed';
                     
-                    $this->dispaly_lib->user_page($data,$name);
-                    
+                    $this->display_lib->users_page($data,$name);
                 }
                 else
                 {
@@ -58,39 +70,46 @@ class Pages extends CI_Controller {
                     $val_res = $this->form_validation->run();
                     
                     //daca falidarea merge
-                    if($val_rus==TRUE)
+                    if( $val_res == TRUE )
                     {
-                        $entered_captcha= $this->input->post('capthca');
+                        $entered_captcha= $this->input->post('captcha');
                         
                         if($entered_captcha == $this->session->userdata('rnd_captcha'))
                         {
+                          
+                                
+                            
                             $this->load->library('typography');
-                            $name->load->input->post('name');
-                            $surname->load->input->post('surname');
-                            $nick->load->input->post('nick');
-                            $name = $this->typography->auto_typography($name,TRUE);
-                            $name= strip_tags($name);
-                            $message = "A scris:$name\nTema: $surname\nmesaj:\n$nick\nsdad";
-                        
-                            mail($name,$surname,$nick,"Content_type:text/plain;charset = windows-1251\r\n");
-                            $data['info']= 'merssi';
-                            $name = 'info';
-                            $this->display_lib->user_info_page($data,$name);
+                            $name   = $this->input->post('name');
+                            $surname= $this->input->post('surname');
+                            $nick   = $this->input->post('nick');
+                        //  $name = $this->typography->auto_typography($name,TRUE);
+                        //  $name= strip_tags($name);
+                         
+                            
+                            
+                            $this->display_lib->users_page(array('info' => 'Succes'),'info');
+                           // $this->input->post('users');
+                            $this->pages_model->add_new(array(
+                                'name'      => $name,
+                                'surname'   => $surname,
+                                'nick'      => $nick
+                            ));
                         }
                            else
                            {
                                $data['imgcode']= $this->captcha_lib->captcha_actions();
                                $data['info']= 'nui corec';
                                $name = 'pages/filed';
-                               $this->display_lib->user_page($data,$name);
+                               $this->display_lib->users_page($data,$name);
                            }
                         }    
                     
                         else{
                             $data['imgcode']=$this->captcha_lib->captcha_actions();
                             $data['info']='';
-                            $name='pages/contact';
-                            $this->display_lib->user_page($data,$name);
+                            $name='pages/filed';
+                            $this->display_lib->users_page($data,$name);
                             
                         }
                         
@@ -115,6 +134,11 @@ class Pages extends CI_Controller {
                 break;
                 }
         }
+    }
+    
+    public function userremove($user_id) {
+        $this->pages_model->delete($user_id);
+        redirect('/pages/all','localtion',302);
     }
 
 }

@@ -8,7 +8,7 @@ class Display_lib {
     public function users_page($data, $name) {
         $CI = &get_instance();
 
-        // var_dump($name.'_view');
+        //var_dump($name.'_view');
         $CI->load->view($name . '_view', $data);
     }
 

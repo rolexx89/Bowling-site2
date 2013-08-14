@@ -65,7 +65,7 @@ $autoload['libraries'] = array('database','session','form_validation','display_l
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form');
+$autoload['helper'] = array('url','form','smiley');
 
 
 /*
@@ -84,6 +84,16 @@ $autoload['helper'] = array('url','form');
 $autoload['config'] = array();
 
 
+/*
+| -------------------------------------------------------------------
+|  Auto-load Plugins
+| -------------------------------------------------------------------
+| Prototype:
+|
+|	$autoload['plugin'] = array('captcha', 'js_calendar');
+*/
+
+$autoload['plugins'] = array('captcha');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Language files

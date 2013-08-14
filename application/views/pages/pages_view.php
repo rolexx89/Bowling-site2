@@ -8,7 +8,7 @@
                 Id Utilizator:
             </span>
             <span class="field-value">
-                <a href="<?= base_url() . "users/$item[id]"; ?>"><?php echo htmlspecialchars($item['id']); ?></a>
+                <a href="<?= base_url() . "pages/show/$item[id]"; ?>"><?php echo htmlspecialchars($item['id']); ?></a>
             </span>
         </div>
         <div class="field-row">

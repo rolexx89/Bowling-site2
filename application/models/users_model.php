@@ -2,7 +2,7 @@
 
 class users_model extends CI_Model {
 
-    function get_users($num , $offset)
+/**    function get_users($num , $offset)
     {
        $this-> db-> limit('10'); 
        $this-> db-> order_by('id','desc'); 
@@ -34,6 +34,8 @@ class users_model extends CI_Model {
     }
 	
 }
-
+**/
 /* End of file users.php */
 /* Location: ./application/models/users_model.php */
+    
+}

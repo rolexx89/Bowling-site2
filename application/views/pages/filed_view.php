@@ -1,10 +1,8 @@
 <div id="wrapper">
     <div id="content">
-        <?=$main_info['name'];?>
-        <?=$main_info['nick'];?>
-       
         
-        <form action="<?=base_url();?>pages/filed" method="post">
+        
+        <form action="http://test.local/pages/filed" method="post">
         <p> Numele vostru <br>
             <input type ="text" name="name" value="<?=set_value('name');?>"><br>
             <strong><?=form_error('name');?></strong>
@@ -21,6 +19,7 @@
         </p>
         
         <p>introdu textul din imagine </p>
+        
         <p> <?=$imgcode?> </p>
         <p> <input type="text" name="captcha" size="10"> <br>
             <strong><?=form_error('captcha'),$info;?></strong>

@@ -19,5 +19,4 @@ class Crud extends CI_Model {
     }
 
 }
-?>
 

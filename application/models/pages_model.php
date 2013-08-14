@@ -20,12 +20,12 @@ class pages_model extends crud {
         array (
             'field'=>'surname',
             'label'=>'surname',
-            'rules'=>'trim|required|valid_email|xss_clean|max_leangth[70]'
+            'rules'=>'trim|required|xss_clean|max_leangth[70]'
         ),
          array (
             'field'=>'nick',
             'label'=>'nickname',
-            'rules'=>'trim|required|valid_email|xss_clean|max_leangth[70]'
+            'rules'=>'trim|required|xss_clean|max_leangth[70]'
         ),
         array (
             'field'=>'captcha',
@@ -33,6 +33,23 @@ class pages_model extends crud {
             'rules'=>'required|numeric|exact_length[5]'
         )
             );
+            public  function get_by($id)
+            {
+                $this->db->order_by('id','desc');
+              //  $this->db->where('id',$id);
+                $query= $this->db->get('users');
+                return $query->result_array();    
+            }
+            public function add_new($users_data)
+            {
+               // var_dump($users_data);
+                $this->db->insert('users',$users_data);
+            }
+            function  delete($id)
+                 {
+                  $this->db->where('id',$id);
+                  $this->db->delete('users');
+                 }
 }
 
-?> 
+?>
