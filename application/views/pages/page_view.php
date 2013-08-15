@@ -5,10 +5,26 @@
     <div class="field-set">
         <div class="field-row">
             <span class="field-name">
+                User Id:
+            </span>
+            <span class="field-value">
+                <?php echo htmlspecialchars($main_info['id']); ?>
+            </span>
+        </div>
+        <div class="field-row">
+            <span class="field-name">
                 Nume Utilizator:
             </span>
             <span class="field-value">
                 <?= $main_info['name']; ?>
+            </span>
+        </div>
+        <div class="field-row">
+            <span class="field-name">
+                Prenume Utilizator:
+            </span>
+            <span class="field-value">
+                <?= $main_info['surname']; ?>
             </span>
         </div>
         <div class="field-row">
@@ -20,8 +36,9 @@
             </span>
         </div>
         <div class="field-row">
-            <a href="<?php echo base_url(); ?>/pages/userremove/<?php echo htmlspecialchars($main_info['id']); ?>">Delete</a>
-            <a href="<?php echo base_url(); ?>/pages/all">Cancel</a>
+            <a href="<?php echo base_url(); ?>pages/userremove/<?php echo htmlspecialchars($main_info['id']); ?>">Delete</a>
+            <a href="<?php echo base_url(); ?>pages/all">Cancel</a>
+            <a href="<?php echo base_url(); ?>pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>">Edit</a>
         </div>
     </div>
 </form>

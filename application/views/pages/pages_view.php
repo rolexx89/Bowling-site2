@@ -1,6 +1,15 @@
 
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-
+<div class="field-set">
+    <div class="field-row">
+        <span class="field-name">
+            Actions:
+        </span>
+        <span class="field-value">
+            <a href="<?php echo base_url(); ?>pages/filed">Add new user</a>
+        </span>
+    </div>
+</div>
 <?php foreach ($all_users as $item) { ?>
     <div class="field-set">
         <div class="field-row">

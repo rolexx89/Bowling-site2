@@ -1,9 +1,9 @@
 html,body{margin:0;padding:0}
 body{font: 76% arial,sans-serif;text-align:center}
 p{margin:0 10px 10px}
-a{display:block;color: #981793;padding:10px}
+a{color: #981793;}
 div#header h1{height:80px;line-height:80px;margin:0;
-  padding-left:10px;background: #EEE;color: #79B30B}
+              padding-left:10px;background: #EEE;color: #79B30B}
 div#container{text-align:left}
 div#content p{line-height:1.4}
 div#leftblock{background:#B9CAFF}
@@ -17,3 +17,42 @@ div#content{margin: 0 150px}
 div#leftblock{float:left;width:150px;margin-left:-700px}
 div#rightblock{float:left;width:150px;margin-left:-150px}
 div#footer{clear:left;width:100%}
+.field-set {
+    border-top	: 1px solid #efefef;
+    border-bottom	: 3px double #efefef;
+
+    margin	: 10px 0;
+}
+
+.field-set:hover {
+    background	: #efefef;
+}
+
+.field-row {
+    width	: 540px;
+    margin	: 3px auto;
+
+    border	: 1px solid #c0c0c0;
+    background	: #efefef;
+
+    padding	: 3px 10px;
+
+    color	: #000;
+    font-size	: 11px;
+
+    text-align	: left;
+}
+
+.field-row:hover {
+    background	: #fefefe;
+}
+
+.field-row .field-name {
+    display	: inline-block;
+    text-align	: right;
+    margin-right: 10px;
+    width	: 120px;
+
+    font-weight	: bold;
+    color	: #232323;
+}

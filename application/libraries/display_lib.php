@@ -18,10 +18,8 @@ class Display_lib {
         // var_dump($name.'_view');
         $CI->load->view('info_preheader_view');
         $CI->load->view($name . '_view', $data);
-    
-    
-    
-}
+    }
 
 }
+
 ?>
