@@ -32,13 +32,7 @@ class Pages extends CI_Controller {
 
 
         switch ($id) {
-            //   case 'user'
-            //   $data ['fail_captcha']= '';
-            //$data ['success_user']= '';
-            //     $data ['user_list']= $this->users_model->get_by($id);
-            //     $name = 'pages/user';
-            //     $this->display_lib->users_page($data,$name);
-            // break;
+           
 
 
             case 'all':   //dupa id putem afisha orce utilizator si toate datele din bd
@@ -62,7 +56,7 @@ class Pages extends CI_Controller {
 
                     $this->display_lib->users_page($data, $name);
                 } else {
-                    $this->form_validation->set_rules($this->pages_model->contact_rules);
+                    $this->form_validation->set_rules($this->pages_model->field_rules);
 
                     $val_res = $this->form_validation->run();
 
@@ -142,7 +136,7 @@ class Pages extends CI_Controller {
                 ));
                 // $this->display_lib->users_page(array('info' => 'Succes'),'info');
             } else {
-                var_dump($val_res);
+                
             }
         }
         $data['info'] = '';

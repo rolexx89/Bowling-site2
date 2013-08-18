@@ -7,7 +7,7 @@ class pages_model extends crud {
 
     public $table = 'users'; //Numele tabelului
     public $idkey = 'id'; //id index al fecarui utilizator
-    public $contact_rules = array(
+    public $field_rules = array(
         array(
             'field' => 'name',
             'label' => 'nume',
@@ -55,7 +55,7 @@ class pages_model extends crud {
     }
 
     public function add_new($users_data) {
-        // var_dump($users_data);
+       
         $this->db->insert('users', $users_data);
     }
 

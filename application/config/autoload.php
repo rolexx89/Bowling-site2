@@ -120,7 +120,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('crud','all_users');
+$autoload['model'] = array('crud','all_users','games_model');
 
 
 /* End of file autoload.php */

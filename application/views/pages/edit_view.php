@@ -2,7 +2,7 @@
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <div id="wrapper">
     <div id="content">
-        <form action="http://test.local/pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>/" method="post" charset="utf-8">
+        <form action="<?php echo base_url(); ?>/pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>/" method="post" charset="utf-8">
             <div class="field-set">
                 <div class="field-row">
                     <span class="field-name">

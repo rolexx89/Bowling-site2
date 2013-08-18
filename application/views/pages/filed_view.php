@@ -3,7 +3,7 @@
     <div id="content">
 
 
-        <form action="http://test.local/pages/filed" method="post">
+        <form action="<?php echo base_url(); ?>pages/filed" method="post">
             <div class="field-set">
                 <div class="field-row">
                     <span class="field-name">
