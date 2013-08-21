@@ -16,7 +16,7 @@ class Display_lib {
         $CI = &get_instance();
 
         // var_dump($name.'_view');
-        $CI->load->view('info_preheader_view');
+       // $CI->load->view('info_preheader_view');
         $CI->load->view($name . '_view', $data);
     }
 

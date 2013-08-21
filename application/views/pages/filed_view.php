@@ -43,7 +43,7 @@
                 </div>
                 <div class="field-row">
                     <input type="submit" name="send_message" value="inregistrare">
-                    <a href="<?php echo base_url(); ?>pages/show/all">Cancel</a>
+                    <a href="<?php echo base_url(); ?>pages/all">Cancel</a>
                 </div>
             </div>
         </form>

@@ -38,11 +38,11 @@
 |
 */
 
-$route['default_controller'] = "pages/show/all";
+$route['default_controller'] = "pages/allUsers";
 $route['404_override']       = '';
 
-$route['pages/all']          = "pages/show/all";
-$route['pages/filed']        = 'pages/show/filed';
+$route['pages/all']          = "pages/allUsers";
+$route['pages/filed']        = 'pages/filed';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
