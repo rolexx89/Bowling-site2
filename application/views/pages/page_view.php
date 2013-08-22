@@ -3,14 +3,7 @@
 <form action="<?php echo base_url(); ?>/pages/show/<?php echo htmlspecialchars($main_info['id']); ?>" method="post">
     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($main_info['id']); ?>" > 
     <div class="field-set">
-        <div class="field-row">
-            <span class="field-name">
-                User Id:
-            </span>
-            <span class="field-value">
-                <?php echo htmlspecialchars($main_info['id']); ?>
-            </span>
-        </div>
+        <?php htmlspecialchars($main_info['id']); ?>
         <div class="field-row">
             <span class="field-name">
                 Nume Utilizator:
@@ -36,9 +29,19 @@
             </span>
         </div>
         <div class="field-row">
-            <a href="<?php echo base_url(); ?>pages/userremove/<?php echo htmlspecialchars($main_info['id']); ?>">Delete</a>
-            <a href="<?php echo base_url(); ?>pages/all">Cancel</a>
-            <a href="<?php echo base_url(); ?>pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>">Edit</a>
+          
+           <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-pencil">
+            <a class="ui-icon ui-icon-pencil" href="<?php echo base_url(); ?>pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>"> Edit </a>
+            </li>
+            
+            <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-trash">
+            <a class="ui-icon ui-icon-trash" href="<?php echo base_url(); ?>pages/userremove/<?php echo htmlspecialchars($main_info['id']); ?>">del</a>
+            </li>
+
+            <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
+            <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>pages/all"> Cancel </a>
+            </li>
+        
         </div>
     </div>
 </form>

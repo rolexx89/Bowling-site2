@@ -8,7 +8,7 @@
                 Game #:
             </span>
             <span class="field-value">
-                <a href="<?= base_url() . "games/show/{$games_data['game_id']}"; ?>">
+                <a class="ui-button ui-state-default ui-corner-all" href="<?= base_url() . "games/show/{$games_data['game_id']}"; ?>">
                     <?php echo htmlspecialchars($games_data['game_id']); ?>
                 </a>
             </span>

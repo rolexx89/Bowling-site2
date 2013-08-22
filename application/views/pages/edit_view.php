@@ -1,17 +1,9 @@
-
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <div id="wrapper">
     <div id="content">
         <form action="<?php echo base_url(); ?>/pages/edit/<?php echo htmlspecialchars($main_info['id']); ?>/" method="post" charset="utf-8">
             <div class="field-set">
-                <div class="field-row">
-                    <span class="field-name">
-                        User Id:
-                    </span>
-                    <span class="field-value">
-                        <?php echo htmlspecialchars($main_info['id']); ?>
-                    </span>
-                </div>
+                
                 <div class="field-row">
                     <span class="field-name">
                         Name:
@@ -40,8 +32,12 @@
                     </span>
                 </div>
                 <div class="field-row">
-                    <input type="submit" name="edit" value="editare">
-                    <a href="<?php echo base_url(); ?>pages/show/<?php echo htmlspecialchars($main_info['id']); ?>">Cancel</a>
+                 <input class="ui-button ui-state-default ui-corner-all"  type="submit" value="editare" name="edit" >
+                
+                 <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
+                 <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>pages/all"> Cancel </a>
+                 </li>
+                
                 </div>
             </div>
         </form>

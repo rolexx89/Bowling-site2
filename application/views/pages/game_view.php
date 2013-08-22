@@ -130,10 +130,18 @@
             foreach ( $currentGameData['game-data-grouped']['users'] as $item_id => $item ) {
                 ?>
                 <div>
-                    <input type="radio" name="game_data[player]" value="<?=$item_id;?>">
-                    <?=htmlspecialchars($item['user_data']['name']); ?>
+                   <div id="radioset" class="ui-buttonset">
+                        
+                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"  aria-disabled="false" >
+
+                    <input class="ui-helper-hidden-accessible" type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                <span class="ui-button-text">    
+                <?=htmlspecialchars($item['user_data']['name']); ?>
                     <?=htmlspecialchars($item['user_data']['surname']); ?>
                     ( <?=htmlspecialchars($item['user_data']['nick']); ?> )
+                </samp>
+                        </label>
+                    </div>
                 </div>
             <?php }
              // afisam utilizatorii ce pot intra in joc
@@ -143,10 +151,18 @@
                     <?php foreach ( $currentGameData['all-users'] as $item_id => $item )
                         if(!isset($currentGameData['game-data-grouped']['users'][$item_id])) { ?>
                         <div>
-                            <input type="radio" name="game_data[player]" value="<?=$item_id;?>">
-                            <?=htmlspecialchars($item['name']); ?>
+                            <div id="radioset" class="ui-buttonset">
+                        
+                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"  aria-disabled="false" >
+
+                            <input  class="ui-helper-hidden-accessible"  type="radio" checked="checked" name="game_data[player]" value="<?=$item_id;?>">
+                        <span class="ui-button-text">
+                        <?=htmlspecialchars($item['name']); ?>
                             <?=htmlspecialchars($item['surname']); ?>
                             ( <?=htmlspecialchars($item['nick']); ?> )
+                        </span>
+                        </label>  
+                            </div>
                         </div>
                     <?php }
                 ?></div>
@@ -154,7 +170,7 @@
             }
         ?>
             <hr />
-            <input type="submit">
+            <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Jok">
         </form>
         <?php
     }

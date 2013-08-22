@@ -6,7 +6,8 @@
             Actions:
         </span>
         <span class="field-value">
-            <a href="<?php echo base_url(); ?>pages/filed">Add new user</a>
+            <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-contact">
+            <a class="ui-icon ui-icon-contact" href="<?php echo base_url(); ?>pages/filed">Add new user</a> </li>
         </span>
     </div>
 </div>
@@ -17,7 +18,9 @@
                 Id Utilizator:
             </span>
             <span class="field-value">
-                <a href="<?= base_url() . "pages/show/$item[id]"; ?>"><?php echo htmlspecialchars($item['id']); ?></a>
+                <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-unlocked">
+                <a class="ui-icon ui-icon-unlocked" href="<?= base_url() . "pages/show/$item[id]"; ?>"><?php echo htmlspecialchars($item['id']); ?></a>
+                </li>
             </span>
         </div>
         <div class="field-row">

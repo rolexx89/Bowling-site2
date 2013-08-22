@@ -56,3 +56,247 @@ div#footer{clear:left;width:100%}
     font-weight	: bold;
     color	: #232323;
 }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #555555;
+    font-weight: normal;
+}
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+}
+.ui-button {
+    cursor: pointer;
+    line-height: normal;
+    text-align: center;
+
+}
+input.ui-button {
+    padding: 0.4em 1em;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 4px;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: url("images/ui-bg_glass_75_e6e6e6_1x400.png") repeat-x scroll 50% 50% #E6E6E6;
+    border: 1px solid #D3D3D3;
+    color: #555555;
+    font-weight: normal;
+}
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+}
+.ui-button, .ui-button:link, .ui-button:visited, .ui-button:hover, .ui-button:active {
+    text-decoration: none;
+}
+.ui-button {
+    cursor: pointer;
+    display: inline-block;
+    line-height: normal;
+    margin-right: 0.1em;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+
+ul#icons span.ui-icon {
+    float: left;
+    margin: 0 4px;
+}
+#themeroller-content * {
+    -moz-box-sizing: content-box;
+}
+.ui-state-default .ui-icon {
+    background-image: url("/themeroller/images/ui-icons_cccccc_256x240.png");
+}
+.ui-state-default .ui-icon {
+    background-image: url("images/ui-icons_888888_256x240.png");
+}
+#themeroller .application a:focus, div.content * {
+    outline: 0 none !important;
+}
+.ui-icon-trash {
+    background-position: -176px -96px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("/themeroller/images/ui-icons_cccccc_256x240.png");
+}
+.ui-icon {
+    height: 16px;
+    width: 16px;
+}
+.ui-icon-trash {
+    background-position: -176px -96px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("images/ui-icons_222222_256x240.png");
+}
+
+.ui-icon {
+    background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -90px;
+}
+
+ul#icons span.ui-icon {
+    float: left;
+    margin: 0 4px;
+}
+#themeroller-content * {
+    -moz-box-sizing: content-box;
+}
+.ui-state-default .ui-icon {
+    background-image: url("/themeroller/images/ui-icons_cccccc_256x240.png");
+}
+.ui-state-default .ui-icon {
+    background-image: url("images/ui-icons_888888_256x240.png");
+}
+#themeroller .application a:focus, div.content * {
+    outline: 0 none !important;
+}
+.ui-icon-pencil {
+    background-position: -64px -112px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("/themeroller/images/ui-icons_cccccc_256x240.png");
+}
+.ui-icon-pencil {
+    background-position: -64px -112px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("images/ui-icons_222222_256x240.png");
+}
+
+* {
+    -moz-box-sizing: border-box;
+}
+*::-moz-placeholder {
+    color: #9A1B1E;
+}
+*::-moz-selection {
+    background: none repeat scroll 0 0 #B3D4FC;
+    text-shadow: none;
+}
+.ui-icon-home {
+    background-position: 0 -112px;
+}
+.ui-icon-home {
+    background-position: 0 -112px;
+}
+*::-moz-selection {
+    background: none repeat scroll 0 0 #B3D4FC;
+    text-shadow: none;
+}
+ul#icons li {
+    cursor: pointer;
+    list-style: none outside none;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #EEEEEE;
+    font-weight: bold;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #555555;
+    font-weight: normal;
+}
+#themeroller-content * {
+    -moz-box-sizing: content-box;
+}
+#themeroller .application a:focus, div.content * {
+    outline: 0 none !important;
+}
+.ui-icon-contact {
+    background-position: -192px -128px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("/themeroller/images/ui-icons_cccccc_256x240.png");
+}
+.ui-icon-contact {
+    background-position: -192px -128px;
+}
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: url("images/ui-icons_222222_256x240.png");
+}
+.ui-icon-unlocked {
+    background-position: -208px -96px;
+}
+.ui-icon-unlocked {
+    background-position: -208px -96px;
+}
+.ui-icon {
+    background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+}
+#themeroller-content * {
+    -moz-box-sizing: content-box;
+}
+.ui-button-text-only .ui-button-text {
+    padding: 0.4em 1em;
+}
+.ui-button .ui-button-text {
+    display: block;
+    line-height: normal;
+}
+#themeroller .application a:focus, div.content * {
+    outline: 0 none !important;
+}
+* {
+    -moz-box-sizing: border-box;
+}
+*::-moz-placeholder {
+    color: #9A1B1E;
+}
+*::-moz-selection {
+    background: none repeat scroll 0 0 #B3D4FC;
+    text-shadow: none;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    color: #212121;
+    font-weight: normal;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #555555;
+    font-weight: normal;
+}
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    color: #212121;
+    font-weight: normal;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #555555;
+    font-weight: normal;
+}
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+}
+.ui-button {
+    cursor: pointer;
+    line-height: normal;
+    text-align: center;
+}
+
+
+
+
+
+
+

@@ -37,13 +37,17 @@
                         <?= $imgcode ?>
                     </span>
                     <span class="field-value">
-                        <input type="text" name="captcha" placeholder="introdu textul din imagine"><br>
+                        <input class="ui-button ui-widget ui-state-default ui-corner-all" type="text" name="captcha" placeholder="introdu textul din imagine"><br>
                         <strong><?= form_error('captcha'), $info; ?></strong>
                     </span>
                 </div>
                 <div class="field-row">
-                    <input type="submit" name="send_message" value="inregistrare">
-                    <a href="<?php echo base_url(); ?>pages/all">Cancel</a>
+                    <input class="ui-button ui-state-default ui-corner-all" type="submit" name="send_message" value="inregistrare">
+                    
+                    <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
+                    <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>pages/all"> Cancel </a>
+                    </li>
+                
                 </div>
             </div>
         </form>
