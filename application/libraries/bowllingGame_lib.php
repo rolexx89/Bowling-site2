@@ -24,7 +24,7 @@ class BowllingGame_lib {
             // atunci ea va returna un id nou si neutilizat
             $this->game_id  = $this->games_model->getNewGameId();
         } else {
-            $this->game_id  = $game_id;
+            $this->game_id  = @abs($game_id);
         }
     }
     public  function getGameId() {

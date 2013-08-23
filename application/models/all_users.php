@@ -7,9 +7,9 @@ class All_users extends CI_Model {
 
     private $table  = 'users';
             
-    public function get_allusers($page = 0, $per_page = 5) {
+    public function get_allusers() {   //$page = 0, $per_page = 5
         $this->db->order_by('id', 'desc');
-        $this->db->limit($per_page, $page * $per_page);
+     // $this->db->limit($per_page, $page * $per_page);
         $query = $this->db->get($this->table);
         $data   = $query->result_array(); //afiseaza toti utilizatori intrun array
         $list   = array();

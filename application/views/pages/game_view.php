@@ -61,6 +61,7 @@
         <?php
         if(!empty($currentGameData['game-data'])) {
             ?>
+        <center>
             <table class="list">
                 <tr class="mark">
                     <td>Game #<?=$currentGameData['game']->getGameId(); ?></td>
@@ -111,6 +112,7 @@
             }
             ?>
             </table>
+            </center>
             <?php
         }
 
@@ -139,6 +141,7 @@
                 <?=htmlspecialchars($item['user_data']['name']); ?>
                     <?=htmlspecialchars($item['user_data']['surname']); ?>
                     ( <?=htmlspecialchars($item['user_data']['nick']); ?> )
+                    <p></p>
                 </samp>
                         </label>
                     </div>
@@ -153,13 +156,14 @@
                         <div>
                             <div id="radioset" class="ui-buttonset">
                         
-                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"  aria-disabled="false" >
+                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"aria-disabled="false" >
 
-                            <input  class="ui-helper-hidden-accessible"  type="radio" checked="checked" name="game_data[player]" value="<?=$item_id;?>">
+                            <input  class="ui-helper-hidden-accessible"  type="radio"  name="game_data[player]" value="<?=$item_id;?>">
                         <span class="ui-button-text">
                         <?=htmlspecialchars($item['name']); ?>
                             <?=htmlspecialchars($item['surname']); ?>
                             ( <?=htmlspecialchars($item['nick']); ?> )
+                            <p></p>
                         </span>
                         </label>  
                             </div>
