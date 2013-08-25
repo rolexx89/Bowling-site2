@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://test.local/';
+$config['base_url']	= 'http://bowling.local/';
 
 /*
 |--------------------------------------------------------------------------

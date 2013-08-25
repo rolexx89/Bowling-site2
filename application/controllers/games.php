@@ -38,6 +38,7 @@ class Games extends CI_Controller {
     private $currentGameData    = array();
     
     public function newgame() {
+       // var_dump($_POST);
         // informatia primita din formulat de la prima postare de date..
         $data   = ( isset($_POST['game_data']) ? $_POST['game_data'] : array() );
         // daca informatia a fost postata se efectueaza adaugarea in bazei de date
@@ -85,6 +86,7 @@ class Games extends CI_Controller {
      */
     
     public function show($game_id) {
+        
         // informatia primita din formulat de la prima postare de date..
         $data = ( isset($_POST['game_data']) ? $_POST['game_data'] : array() );
         // incarcam modlele tablelelor games si users

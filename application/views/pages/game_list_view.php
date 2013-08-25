@@ -13,7 +13,12 @@
                 </a>
             </span>
         </div>
+        
     </div>
 <?php } ?>
 </div>
+<li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
+    <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>
+</li>
 </div>
+  

@@ -1,47 +1,5 @@
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 
-<style type="text/css">
-    * {
-        margin  : 0;
-        padding : 0;
-    }
-    #wall {
-        background  : #222;
-        min-height  : 100%;
-        width       : 100%;
-    }
-
-    #wall #container {
-        width   : 1000px;
-        /*height    : 100%;*/
-        margin  : 0 auto;
-        padding : 10px;
-        background  : #fff;
-        text-align  : left;
-    }
-
-    html,body,body center.wall {
-        height  : 100%;
-    }
-
-    div#body {
-        min-height  : 360px;
-        padding : 20px 10px;
-    }
-
-    table.list {
-        min-width   : 540px;
-        font-size   : 11px;
-    }
-    table.list td {
-        margin  : 2px;
-        border  : 1px solid #efefef;
-        padding : 5px 10px;
-    }
-    table.list tr.mark td {
-        background  : #dedede;
-    }
-</style>
 
 <?php if(isset($currentGameData['game-status'])) {  // controlam ca datele jocului au fost primite in view
 
@@ -122,6 +80,7 @@
         <hr />
         <hr />
         <h3>Push Data</h3>
+        
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
             <h4>Enter Throw score</h4>
             <input type="text" name="game_data[value]" value="">
@@ -131,43 +90,31 @@
             // afisam utilizatorii ce deja joaca
             foreach ( $currentGameData['game-data-grouped']['users'] as $item_id => $item ) {
                 ?>
-                <div>
-                   <div id="radioset" class="ui-buttonset">
-                        
-                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"  aria-disabled="false" >
-
-                    <input class="ui-helper-hidden-accessible" type="radio" name="game_data[player]" value="<?=$item_id;?>">
-                <span class="ui-button-text">    
+                  <div style="padding-left: 30px;">   
+                <label class="ui-state-default" >
+                    <input  type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                     <span>    
                 <?=htmlspecialchars($item['user_data']['name']); ?>
                     <?=htmlspecialchars($item['user_data']['surname']); ?>
                     ( <?=htmlspecialchars($item['user_data']['nick']); ?> )
-                    <p></p>
-                </samp>
-                        </label>
-                    </div>
-                </div>
-            <?php }
+                     </samp>
+                </label>
+                  </div>
+                <?php }
              // afisam utilizatorii ce pot intra in joc
             if($currentGameData['game-status']['allowed-new'] == true) {
                 ?><div style="padding-left: 30px;padding-top: 10px;">
                     <sub>While the first round is not finished in game can enter other players</sub>
                     <?php foreach ( $currentGameData['all-users'] as $item_id => $item )
                         if(!isset($currentGameData['game-data-grouped']['users'][$item_id])) { ?>
-                        <div>
-                            <div id="radioset" class="ui-buttonset">
-                        
-                        <label class=" ui-widget ui-state-default ui-button-text-only" role="button"aria-disabled="false" >
-
-                            <input  class="ui-helper-hidden-accessible"  type="radio"  name="game_data[player]" value="<?=$item_id;?>">
-                        <span class="ui-button-text">
-                        <?=htmlspecialchars($item['name']); ?>
-                            <?=htmlspecialchars($item['surname']); ?>
-                            ( <?=htmlspecialchars($item['nick']); ?> )
-                            <p></p>
-                        </span>
-                        </label>  
-                            </div>
-                        </div>
+                            <label class="ui-state-default" >
+                                <input type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                                <span>
+                                <?=htmlspecialchars($item['name']); ?>
+                                    <?=htmlspecialchars($item['surname']); ?>
+                                    ( <?=htmlspecialchars($item['nick']); ?> )
+                                </span>
+                            </label>
                     <?php }
                 ?></div>
                 <?php
@@ -175,6 +122,13 @@
         ?>
             <hr />
             <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Jok">
+            <hr />
+            <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
+               <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>
+            </li>
+            <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon script">
+                <a class="ui-icon ui-icon-script" href="<?php echo base_url(); ?>games/lists/<?php echo htmlspecialchars($item['id']); ?>"> lista </a>
+            </li>
         </form>
         <?php
     }

@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class pages_model extends crud {
+class pages_model extends CI_Model {
 
     public $table = 'users'; //Numele tabelului
     public $idkey = 'id'; //id index al fecarui utilizator
@@ -46,6 +46,9 @@ class pages_model extends crud {
             'rules' => 'trim|required|xss_clean|max_leangth[70]'
         )
     );
+    public function pages_model() {
+        parent::__construct();
+    }
 
     public function get_by($id) {
         $this->db->order_by('id', 'desc');
@@ -68,7 +71,11 @@ class pages_model extends crud {
         $this->db->where('id', $id);
         $query = $this->db->update('users', $data);
     }
-
+    public function get($obj_id) {
+        $this->db->where($this->idkey, $obj_id);
+        $query = $this->db->get($this->table);
+        return $query->row_array();
+    }
 }
 
 ?>

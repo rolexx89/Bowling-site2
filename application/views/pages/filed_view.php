@@ -3,7 +3,7 @@
     <div id="content">
 
 
-        <form action="<?php echo base_url(); ?>pages/filed" method="post">
+        <form action="<?php echo base_url(); ?>users/filed" method="post">
             <div class="field-set">
                 <div class="field-row">
                     <span class="field-name">
@@ -45,7 +45,7 @@
                     <input class="ui-button ui-state-default ui-corner-all" type="submit" name="send_message" value="inregistrare">
                     
                     <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
-                    <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>pages/all"> Cancel </a>
+                    <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
                     </li>
                 
                 </div>
