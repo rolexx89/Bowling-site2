@@ -10,7 +10,7 @@
             <br />
             Round: <?php echo htmlspecialchars($currentGameData['game-status']['round']); ?>
         <?php }
-
+    $userNext   = false;
     if($currentGameData['game-data']) {
         ?>
         <hr />
@@ -44,8 +44,10 @@
                             if(isset($user['rounds'][$i])) {
                                 // daca userul are valori pentru round-ul curent afisam valorile
                                 // ... priveste functia actionSufix din controlerul games
+                                $i_val  = 0;
                                 foreach ( $user['rounds'][$i] as $r ) {
                                     $k  += $r['value'];
+                                    $i_val  += $r['value'];
                                     if( $k == 10 && count($user['rounds'][$i]) > 1 ) {
                                         echo "&nbsp;x&nbsp;";
                                     } else {
@@ -57,7 +59,22 @@
                                         echo "&nbsp;x&nbsp;";
                                     }
                                 }
+                                    $i_try = count($user['rounds'][$i]);
+//                                    echo "[ $i_try | $i_val | $i | $userNext - $user_id ]";
+                                    if( $userNext === false ) {
+                                        if( $i == 10 ) {
+                                            if( $i_try < 3 && $i_val < 24 )
+                                                $userNext   = $user_id;
+                                        } else {
+                                            if( $i_try < 2 && $i_val < 10 )
+                                                $userNext   = $user_id;
+                                        }
+                                    }
+//                                    echo "[$userNext]";
+                                
                             } else {
+                                if( $userNext === false && $currentGameData['game-status']['round'] == $i )
+                                    $userNext   = $user_id;
                                 echo "&nbsp;";
                             }
                             ?></td><?php
@@ -87,28 +104,43 @@
             <hr />
             <h4>Select User</h4>
         <?php
+            if( $userNext === false )
+            foreach ( $currentGameData['all-users'] as $item_id => $item )
+                if( !isset($currentGameData['game-data-grouped']['users'][$item_id]) 
+                     &&
+                    in_array($item_id,$currentGameData['game-players'])
+                     ) {
+                        $userNext = $item_id;
+                    }
+                   
             // afisam utilizatorii ce deja joaca
-            foreach ( $currentGameData['game-data-grouped']['users'] as $item_id => $item ) {
+            foreach ( $currentGameData['all-users'] as $item_id => $item )
+                if( isset($currentGameData['game-data-grouped']['users'][$item_id]) 
+                     ||
+                    in_array($item_id,$currentGameData['game-players'])
+                ) {
+                    if( $userNext === false )
+                        $userNext = $item_id;
                 ?>
                   <div style="padding-left: 30px;">   
                 <label class="ui-state-default" >
-                    <input  type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                    <input <?php echo ( $userNext == $item_id ? " checked=\"true\" " : ""); ?> type="radio" name="game_data[player]" value="<?=$item_id;?>">
                      <span>    
-                <?=htmlspecialchars($item['user_data']['name']); ?>
-                    <?=htmlspecialchars($item['user_data']['surname']); ?>
-                    ( <?=htmlspecialchars($item['user_data']['nick']); ?> )
+                        <?=htmlspecialchars($item['name']); ?>
+                        <?=htmlspecialchars($item['surname']); ?>
+                        ( <?=htmlspecialchars($item['nick']); ?> )
                      </samp>
                 </label>
                   </div>
                 <?php }
-             // afisam utilizatorii ce pot intra in joc
-            if($currentGameData['game-status']['allowed-new'] == true) {
+             // afisam utilizatorii ce pot intra in joc pentru selecare
+            if($currentGameData['game-status']['allowed-new'] == true && empty($currentGameData['game-players']) ) {
                 ?><div style="padding-left: 30px;padding-top: 10px;">
                     <sub>While the first round is not finished in game can enter other players</sub>
                     <?php foreach ( $currentGameData['all-users'] as $item_id => $item )
                         if(!isset($currentGameData['game-data-grouped']['users'][$item_id])) { ?>
                             <label class="ui-state-default" >
-                                <input type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                                <input type="checkbox" name="game_data[player][]" value="<?=$item_id;?>">
                                 <span>
                                 <?=htmlspecialchars($item['name']); ?>
                                     <?=htmlspecialchars($item['surname']); ?>
@@ -121,7 +153,7 @@
             }
         ?>
             <hr />
-            <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Jok">
+            <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Arunca">
             <hr />
             <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
                <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>

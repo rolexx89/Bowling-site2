@@ -14,17 +14,19 @@ class Users extends CI_Controller {
         $this->load->model('all_users');
         $this->load->library('captcha_lib');
     }
-
-    function Users() {
-        parent::CI_Controller();
-    }
-
+    
+/**
+ * redirectioneaza la pagina initiala 
+ */
     public function index() {
         redirect(base_url());
     }
-
+    
+/**
+ * acceseaza modelul allUsers si inscrie in array $data['all_users']
+ * si apoi trece prin clasa display pentru a afisha datele
+ */
     public function allUsers() {
-        //toti utilizatori intru masif care va afisha pe toti printru for
         $data['all_users'] = $this->all_users->get_allusers();
 
         $name = 'pages/pages';
@@ -32,7 +34,10 @@ class Users extends CI_Controller {
         $this->display_lib->users_page($data, $name);
        
     }
-
+/**
+ * functia filed aceasta e field introducerea datelor utilizatorului in bd 
+ * crearea si captcha
+ */
     public function filed() {
         
         if (!isset($_POST['send_message'])) {
@@ -82,40 +87,44 @@ class Users extends CI_Controller {
             }
         }
     }
-
+/**
+ * 
+ * @param type $id un array care prin id utilizatorului 
+ * prea toate datele utilizatorului
+ * tot araiul va fi doar pe o pagina
+ * $data['info'] acest array va fi afishat doar chind in url scriem nu crecta pagina
+ */
     public function show($id) {
-        // $this->load->model('pages_model');
         $data = array();
-        //afisheaza doar dupa un id 
-        $data ['main_info'] = $this->pages_model->get($id); //tot araiul va fi doar pe o pagina
+        $data ['main_info'] = $this->pages_model->get($id); 
 
+        if ($id) {
 
+            if (empty($data['main_info'])) {
+                $data['info'] = 'nu exista asa pagina';
+                $name = 'info';
 
-   switch ($id) {
+                $this->display_lib->user_info_page($data, $name);
+            } else {
+               
+                $name = 'pages/page';
 
-            default :
-                //daca e gol
-                if (empty($data['main_info'])) {
-                    $data['info'] = 'nu exista asa pagina';
-                    $name = 'info';
-
-                    $this->display_lib->user_info_page($data, $name);
-                } else {
-                   //tot araiul va fi doar pe o pagina
-                    $name = 'pages/page';
-
-                    $this->display_lib->users_page($data, $name);
-
-                    break;
-                }
-        }
-    }
-
+                $this->display_lib->users_page($data, $name);
+            }
+         }
+     }
+/**
+ * va sterge tot utilizatoul dupa id , o line 
+ * @param type $user_id integer
+ */
     public function userremove($user_id) {
         $this->pages_model->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
-
+/**
+ * dupa id va fi efectuat edit pentru editarea utilizatorului
+ * @param type $id integer 
+ */
     public function edit($id) {
         $data['main_info'] = $this->pages_model->get($id);
 
@@ -128,13 +137,12 @@ class Users extends CI_Controller {
                     'surname' => $this->input->post('surname'),
                     'nick' => $this->input->post('nick')
                 ));
-                // $this->display_lib->users_page(array('info' => 'Succes'),'info');
-            } else {
-                
-            }
+                redirect('/users/all', 'localtion', 302);
+            } 
         }
-        $data['info'] = '';
+        
         $this->display_lib->users_page($data, 'pages/edit');
+        
     }
 
 }

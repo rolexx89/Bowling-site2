@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class BowllingGame_lib {
+class Bowllinggame_lib {
     /*
             DB  table structure
             Table [BowllingGame]
@@ -13,8 +13,7 @@ class BowllingGame_lib {
     // proprietatile publice unde pot fi accesate modelle bazelor de date
     public  $games_model    = false;
     public  $users_model    = false;
-    private $tableName      = 'bowlling-game';
-
+   
     function __construct() {
     }
 
@@ -39,9 +38,11 @@ class BowllingGame_lib {
         return $data;
     }
     // daca ->pushData() -> returnneaza daca e terminat jocul
-    public  function pushData($val = false,$player = false) {
+    public  function pushData($val = false,$player = false, $usersInGame = false) {
         // get data about game score
         $data   = $this->getData();
+        if(!is_array($usersInGame))
+            $usersInGame    = array();
         if(!is_array($data))
             $data   = array();
         // detect round
@@ -55,12 +56,14 @@ class BowllingGame_lib {
         // if($currentRound < 10) $currentRound += 1;
 
         // check if current round is completed
-        $completed_check    = function($data,$currentRound,&$players) {
+        $completed_check    = function($data,$currentRound,&$players,$usersInGame) {
             $players_all    = array();
             // selectam lista utilizatorilor ce participa in joc
             foreach ($data as $row) {
                 $players_all[$row['user_id']]   = true;
                 }
+            foreach($usersInGame as $i)
+                $players_all[$i]    = true;
             $players    = array();
             $roundHaveData  = false;
             // grupam datele utilizatorilor din round-ul current a jocului
@@ -93,7 +96,8 @@ class BowllingGame_lib {
                 if(
                     ( ( $score['try'] < 2 && $currentRound < 10 ) || ( $score['try'] < 3 && $currentRound == 10 ) )
                         &&
-                    ( $score['sum'] < 10 )
+                    ( ( $score['sum'] < 10 && $currentRound < 10 ) || ( $score['sum'] < 24 && $currentRound == 10 ) )
+                       
                 ) {
 
                     $completed  = false;
@@ -105,7 +109,7 @@ class BowllingGame_lib {
             // deci e completat dar un alt round nu a inceput
             $players_array  = array();
             $round_justCompleted    = false;
-            if($completed_check($data,$currentRound,$players_array)) {
+            if($completed_check($data,$currentRound,$players_array,$usersInGame)) {
                 if($currentRound < 10) {
                     $currentRound += 1;
                     $round_justCompleted    = true;
@@ -144,7 +148,8 @@ class BowllingGame_lib {
             }
 
             // val <= 12
-            if($val > 10)
+            
+            if( ( $val > 10 && $currentRound < 10 ) || ( $currentRound == 10 && $val > 24 ) )
                     return false;
             // check if user was specified
             if(empty($player))
@@ -194,11 +199,14 @@ class BowllingGame_lib {
 
             // daca a fost doar o incercare si valoarea e 10 atuncti setam ca strech
             // si transformam valoarea in 12
-            if($count_try == 0 && $val == 10)
+            if( ( $count_try == 0 && $val == 10 && $currentRound < 10 )
+                    &&
+                ( $count_try < 3 && $val == 10 && $currentRound == 10 )
+                    )
                 $val = 12;
             // insertam valoarea $val oferita de playerul $player
             // daca satisface urmatoarele conditii
-            if( ( ( $sum == 0 && $val <= 12 ) || ( $sum > 0 && $sum + $val <= 10 ) )
+            if( ( ( $sum == 0 && $val <= 12 ) || ( ( $currentRound < 10 && $sum > 0 && $sum + $val <= 10 ) || ( $currentRound == 10 && $sum < 24 ) ) )
                     &&
                     (
                         ( $currentRound < 10 && $count_try < 2 )

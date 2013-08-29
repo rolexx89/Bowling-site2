@@ -32,8 +32,7 @@
                     </span>
                 </div>
                 <div class="field-row">
-                 <input class="ui-button ui-state-default ui-corner-all"  type="submit" value="editare" name="edit" >
-                
+                 <input class="ui-button ui-state-default ui-corner-all" onclick="if(!confirm('Sure, you want to edit this user?')) return false; return true;" type="submit" value="editare" name="edit" >
                  <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
                  <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
                  </li>

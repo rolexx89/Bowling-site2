@@ -17,16 +17,15 @@ class Games_model extends CI_Model {
      * @return type el va vrea aceste date dupa game_id 
      */
     public function get() {
-     // $this->db->where($this->idkey, $obj_id);
         $this->db->group_by('game_id');
         $query = $this->db->get($this->table);       
         return $query->result_array();
     }
-    
+    /**
+     * 
+     * @return type un tip interger cu abs (fara numere negative)
+     */
     public function getNewGameId() {
-//        $row	= mysql_fetch_row(mysql_query("select
-//            max(`game_id`)+1 from `{$this->tableName}` where 1 "));
-//        $this->game_id	= max(1,$row[0]);
         $this->db->order_by('game_id','DESC');
         $this->db->limit(1);
         $query  = $this->db->get($this->table);
@@ -39,11 +38,18 @@ class Games_model extends CI_Model {
                     )+1
                 );
     }
-    
+    /**
+     * 
+     * @param type $data inscrie in baza de date datele games
+     */
     public function putData($data) {
         $this->db->insert($this->table,$data);
     }
-    
+    /**
+     * 
+     * @param type $game_id se ea datele dupa fiecare id din games
+     * @return type returneaza un array cu toate datele jocului
+     */
     public function getData($game_id) {
         $this->db->where('game_id', $game_id);
         $this->db->order_by('`round` ASC,`user_id` ASC,`try_n` ASC');
