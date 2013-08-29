@@ -61,20 +61,30 @@
                                 }
                                     $i_try = count($user['rounds'][$i]);
 //                                    echo "[ $i_try | $i_val | $i | $userNext - $user_id ]";
-                                    if( $userNext === false ) {
+                                    if( $userNext === false )  {
                                         if( $i == 10 ) {
                                             if( $i_try < 3 && $i_val < 24 )
                                                 $userNext   = $user_id;
                                         } else {
-                                            if( $i_try < 2 && $i_val < 10 )
+                                            if(  $i_try < 2 && $i_val < 10 )
                                                 $userNext   = $user_id;
                                         }
                                     }
 //                                    echo "[$userNext]";
                                 
                             } else {
-                                if( $userNext === false && $currentGameData['game-status']['round'] == $i )
+                                if( 
+                                    $userNext === false
+                                        &&
+                                    $currentGameData['game-status']['round'] == $i
+                                        &&
+                                    ( $currentGameData['game-status']['allowed-new'] == false
+                                        ||
+                                      count($currentGameData['game-data-grouped']['users']) == count($currentGameData['game-players'])
+                                    )
+                                  )
                                     $userNext   = $user_id;
+                                    //$user_id = $userNext;
                                 echo "&nbsp;";
                             }
                             ?></td><?php
@@ -96,22 +106,21 @@
         ?>
         <hr />
         <hr />
-        <h3>Push Data</h3>
-        
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
-            <h4>Enter Throw score</h4>
-            <input type="text" name="game_data[value]" value="">
-            <hr />
             <h4>Select User</h4>
         <?php
+//                var_dump($userNext);
             if( $userNext === false )
-            foreach ( $currentGameData['all-users'] as $item_id => $item )
-                if( !isset($currentGameData['game-data-grouped']['users'][$item_id]) 
+            foreach ( $currentGameData['all-users'] as $item_id => $item ) {
+//                echo "{$item_id}:".((int)isset($currentGameData['game-data-grouped']['users'][$item_id]))." ";
+                if( 
+                    !isset($currentGameData['game-data-grouped']['users'][$item_id]) 
                      &&
                     in_array($item_id,$currentGameData['game-players'])
                      ) {
                         $userNext = $item_id;
                     }
+            }
                    
             // afisam utilizatorii ce deja joaca
             foreach ( $currentGameData['all-users'] as $item_id => $item )
@@ -150,6 +159,16 @@
                     <?php }
                 ?></div>
                 <?php
+            } else {
+                ?>
+            <h3>Push Data</h3>
+            <h4>Enter Throw score</h4>
+            <input id="i0" type="text" name="game_data[value]" value="">
+            <hr />
+            <script type="text/javascript">
+                document.getElementById("i0").focus();
+            </script>
+            <?php
             }
         ?>
             <hr />

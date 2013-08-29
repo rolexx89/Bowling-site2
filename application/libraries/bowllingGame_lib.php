@@ -200,13 +200,13 @@ class Bowllinggame_lib {
             // daca a fost doar o incercare si valoarea e 10 atuncti setam ca strech
             // si transformam valoarea in 12
             if( ( $count_try == 0 && $val == 10 && $currentRound < 10 )
-                    &&
+                    ||
                 ( $count_try < 3 && $val == 10 && $currentRound == 10 )
                     )
                 $val = 12;
             // insertam valoarea $val oferita de playerul $player
             // daca satisface urmatoarele conditii
-            if( ( ( $sum == 0 && $val <= 12 ) || ( ( $currentRound < 10 && $sum > 0 && $sum + $val <= 10 ) || ( $currentRound == 10 && $sum < 24 ) ) )
+            if( ( ( $sum == 0 && $val <= 12 ) || ( ( $currentRound < 10 && $sum > 0 && $sum + $val <= 10 ) || ( $currentRound == 10 && $sum+$val <= 24 && $count_try < 2 ) ||  (  $currentRound == 10 && $sum+$val <= 22 && $count_try >= 2  )   ) )
                     &&
                     (
                         ( $currentRound < 10 && $count_try < 2 )
