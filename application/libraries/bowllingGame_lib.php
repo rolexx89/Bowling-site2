@@ -37,26 +37,8 @@ class Bowllinggame_lib {
         $data   = $this->games_model->getData($this->game_id);
         return $data;
     }
-    // daca ->pushData() -> returnneaza daca e terminat jocul
-    public  function pushData($val = false,$player = false, $usersInGame = false) {
-        // get data about game score
-        $data   = $this->getData();
-        if(!is_array($usersInGame))
-            $usersInGame    = array();
-        if(!is_array($data))
-            $data   = array();
-        // detect round
-        $currentRound   = 1;
-        if(count($data)) {
-            $currentRound   = $data[count($data)-1]['round'];
-        }
-
-        // daca tot utilizatorii au completat roundul curent
-        // si $player deja exista atunci
-        // if($currentRound < 10) $currentRound += 1;
-
-        // check if current round is completed
-        $completed_check    = function($data,$currentRound,&$players,$usersInGame) {
+    
+   function completedCheck($data,$currentRound,&$players,$usersInGame) {
             $players_all    = array();
             // selectam lista utilizatorilor ce participa in joc
             foreach ($data as $row) {
@@ -103,13 +85,54 @@ class Bowllinggame_lib {
                     $completed  = false;
                 }
             return $completed && $roundHaveData && count($players) == count($players_all);
-        };
+        }
+    
+        public function checkF($data,$key,$value) {
+                $match_n    = 0;
+                foreach($data as $row)
+                    if( $row[$key]  == $value ) {
+                        $match_n++;
+                    }
+                return $match_n;
+            }
+    public function dataCheck($data,$player, $currentRound){
+                $r  = array(
+                    'sum'   => 0,
+                    'try'   => 0
+                );
+                foreach ($data as $row)
+                    if($row['round'] == $currentRound && $row['user_id'] == $player) {
+                        $r['sum']   += $row['value'];
+                        $r['try']   += 1;
+                    }
+                return $r;
+            }
+    // daca ->pushData() -> returnneaza daca e terminat jocul
+    public  function pushData($val = false,$player = false, $usersInGame = false) {
+        // get data about game score
+        $data   = $this->getData();
+        if(!is_array($usersInGame))
+            $usersInGame    = array();
+        if(!is_array($data))
+            $data   = array();
+        // detect round
+        $currentRound   = 1;
+        if(count($data)) {
+            $currentRound   = $data[count($data)-1]['round'];
+        }
+
+        // daca tot utilizatorii au completat roundul curent
+        // si $player deja exista atunci
+        // if($currentRound < 10) $currentRound += 1;
+
+        // check if current round is completed
+        
             // check if round completed
             // exista probabilitatea ca round-ul sa fie completat numai ce
             // deci e completat dar un alt round nu a inceput
             $players_array  = array();
             $round_justCompleted    = false;
-            if($completed_check($data,$currentRound,$players_array,$usersInGame)) {
+            if($this->completedCheck($data,$currentRound,$players_array,$usersInGame)) {
                 if($currentRound < 10) {
                     $currentRound += 1;
                     $round_justCompleted    = true;
@@ -160,16 +183,9 @@ class Bowllinggame_lib {
 
             // functia data anonima returneaza cite array-uri din array-ul dat
             // poseda valoarea de sub keia $key egala cu valoarea $value
-            $check_f    = function($data,$key,$value) {
-                $match_n    = 0;
-                foreach($data as $row)
-                    if( $row[$key]  == $value ) {
-                        $match_n++;
-                    }
-                return $match_n;
-            };
+            
             // detect if player already used
-            if($check_f($data,'user_id',$player) == 0) {
+            if($this->checkF($data,'user_id',$player) == 0) {
                 // allow new player if round 1
                 if($allowed_newUser && $currentRound == 2) {
                     $currentRound = 1;
@@ -180,20 +196,9 @@ class Bowllinggame_lib {
             }
             // functia data returneaza pentru fiece utilizator cite incercari
             // si ce valoare a acumulat in round-ul $currentRound
-            $data_check = function($data,$player, $currentRound){
-                $r  = array(
-                    'sum'   => 0,
-                    'try'   => 0
-                );
-                foreach ($data as $row)
-                    if($row['round'] == $currentRound && $row['user_id'] == $player) {
-                        $r['sum']   += $row['value'];
-                        $r['try']   += 1;
-                    }
-                return $r;
-            };
+//           $data_check =  $this->dataCheck($data,$player,$currentRound);
             // check if the user can push data in current round
-            $data_player    = $data_check($data,$player,$currentRound);
+            $data_player    = $this->dataCheck($data,$player,$currentRound);
             $sum        = $data_player['sum'];
             $count_try  = $data_player['try'];
 

@@ -10,6 +10,7 @@
             <br />
             Round: <?php echo htmlspecialchars($currentGameData['game-status']['round']); ?>
         <?php }
+       
     $userNext   = false;
     if($currentGameData['game-data']) {
         ?>
@@ -84,8 +85,7 @@
                                     )
                                   )
                                     $userNext   = $user_id;
-                                    //$user_id = $userNext;
-                                echo "&nbsp;";
+                              echo "&nbsp;";
                             }
                             ?></td><?php
                         }
@@ -109,7 +109,7 @@
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
             <h4>Select User</h4>
         <?php
-//                var_dump($userNext);
+           
             if( $userNext === false )
             foreach ( $currentGameData['all-users'] as $item_id => $item ) {
 //                echo "{$item_id}:".((int)isset($currentGameData['game-data-grouped']['users'][$item_id]))." ";
@@ -163,7 +163,7 @@
                 ?>
             <h3>Push Data</h3>
             <h4>Enter Throw score</h4>
-            <input id="i0" type="text" name="game_data[value]" value="">
+            <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off">
             <hr />
             <script type="text/javascript">
                 document.getElementById("i0").focus();
