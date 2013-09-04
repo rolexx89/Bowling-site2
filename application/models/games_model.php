@@ -26,17 +26,14 @@ class Games_model extends CI_Model {
      * @return type un tip interger cu abs (fara numere negative)
      */
     public function getNewGameId() {
+       
+//        $this->db->insert_id();
         $this->db->order_by('game_id','DESC');
         $this->db->limit(1);
         $query  = $this->db->get($this->table);
         $data   = $query->result_array();
         
-        return max(
-                    1,
-                    @abs(
-                        @$data[0]['game_id']
-                    )+1
-                );
+        return $data[0]['game_id']+1;
     }
     /**
      * 

@@ -9,7 +9,7 @@
 <h2>Users List</h2> <center>
 <table  class="list">
 	<tr class="mark">
-		<td><b>Nr</b></td>
+		<td><b>N</b></td>
 		<td><b>Name</b></td>
 		<td><b>Nickname</b></td>
 		<td><b>Surname</b></td>

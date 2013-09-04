@@ -4,14 +4,14 @@
 <?php foreach ($games_list as $games_data) { ?>
     <div class="field-set">
         <div class="field-row">
-            <span class="field-name">
-                Game #:
-            </span>
-            <span class="field-value">
-                <a class="ui-button ui-state-default ui-corner-all" href="<?= base_url() . "games/show/{$games_data['game_id']}"; ?>">
+            <a style="display: block;" href="<?= base_url() . "games/show/{$games_data['game_id']}"; ?>">
+                <span class="field-name">
+                    Game #:
+                </span>
+                <span class="field-value">
                     <?php echo htmlspecialchars($games_data['game_id']); ?>
-                </a>
-            </span>
+                </span>
+            </a>
         </div>
         
     </div>

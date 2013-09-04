@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Bowllinggame_lib {
+class BowllingGame_lib {
     /*
             DB  table structure
             Table [BowllingGame]

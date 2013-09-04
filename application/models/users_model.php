@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class pages_model extends CI_Model {
+class users_model extends CI_Model {
 
-    public $table = 'users'; //Numele tabelului
-    public $idkey = 'id'; //id index al fecarui utilizator
+    private $table  = 'users';
+    public  $idkey  = 'id'; //id index al fecarui utilizator
     /**
      *validarea dateleor pentru crearea utilizatorului
      * @var type array
@@ -89,6 +89,34 @@ class pages_model extends CI_Model {
         $query = $this->db->get($this->table);
         return $query->row_array();
     }
+/**
+ * preiea toti utilizatori din array dupa id si 
+ * cu ajutorul foreach preaiea fiecare  utilizator
+ * @return type integer $list
+ */   
+    public function get_allusers() {   
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get($this->table);
+        $data   = $query->result_array(); //afiseaza toti utilizatori intrun array
+        $list   = array();
+        foreach($data as $user)
+            $list[$user['id']]  = $user;
+        return $list;
+    }
+    /**
+     * verifica daca utilizatori daca nare valoare negativa si daca exista in bd
+     * @param type $user_id integer
+     * @return type integer
+     */
+    public function checkUserById($user_id) {
+        $user_id    = abs(0+$user_id);
+        $this->db->where('id',$user_id);
+        $this->db->limit(1);
+        $query  = $this->db->get($this->table);
+        $data   = $query->result_array();
+        return ( empty($data) ? false : $data[0] );
+    }
+
 }
 
 ?>

@@ -24,6 +24,8 @@ class Display_lib {
  */
     public function user_info_page($data, $name) {
         $CI = &get_instance();
+        if(method_exists($CI, 'actionSuffix'))
+            $CI->actionSuffix($data);
         $CI->load->view($name . '_view', $data);
     }
 

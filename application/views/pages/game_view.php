@@ -1,6 +1,8 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-
-
+<?php if(empty($currentGameData['ajax-request'])) { ?>
+    <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<div id="ajax-space">
+<?php } ?>
 <?php if(isset($currentGameData['game-status'])) {  // controlam ca datele jocului au fost primite in view
 
         if($currentGameData['game-status']['status'] == "completed" ) { ?>
@@ -10,7 +12,6 @@
             <br />
             Round: <?php echo htmlspecialchars($currentGameData['game-status']['round']); ?>
         <?php }
-       
        
         
     $userNext   = false;
@@ -104,8 +105,10 @@
         }
 
     }
-    if($currentGameData['game-status']['status'] != "completed" ) {
-        ?>
+
+    if($currentGameData['game-status']['status'] != "completed") {
+        
+         ?>
         <hr />
         <hr />
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
@@ -135,7 +138,7 @@
                 ?>
                   <div style="padding-left: 30px;">   
                 <label class="ui-state-default" >
-                    <input <?php echo ( $userNext == $item_id ? " checked=\"true\" " : ""); ?> type="radio" name="game_data[player]" value="<?=$item_id;?>">
+                    <input <?php echo ( $userNext == $item_id ? " checked=\"true\" match=\"this\" " : ""); ?> type="radio" name="game_data[player]" value="<?=$item_id;?>">
                      <span>    
                         <?=htmlspecialchars($item['name']); ?>
                         <?=htmlspecialchars($item['surname']); ?>
@@ -160,30 +163,46 @@
                             </label>
                     <?php }
                 ?></div>
+                <input type="submit">
                 <?php
-            } else {
-                ?>
-            <h3>Push Data</h3>
-            <h4>Enter Throw score</h4>
-            <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off">
-            <hr />
-            <script type="text/javascript">
-                document.getElementById("i0").focus();
-            </script>
-            <?php
-            }
+            } else if( empty($currentGameData['game-data']) ) { ?>
+            <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off" >
+            <input type="submit">   
+        <?php }
         ?>
-            <hr />
-            <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Arunca">
-            <hr />
-            <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
-               <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>
-            </li>
-            <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon script">
-                <a class="ui-icon ui-icon-script" href="<?php echo base_url(); ?>games/lists/<?php echo htmlspecialchars($item['id']); ?>"> lista </a>
-            </li>
-        </form>
-        <?php
-    }
+  </form>
+    <?php } ?>
+  </div>
+  <?php
+    if( $currentGameData['game-status']['status'] != "completed"
+        && empty($currentGameData['ajax-request'])
+        && !empty($currentGameData['game-data']) ) {
+        if(!( $currentGameData['game-status']['allowed-new'] == true && empty($currentGameData['game-players']) ) ) { ?>
+        <h3>Push Data</h3>
+        <h4>Enter Throw score</h4>
+        <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off" />
+        <hr />
+        <?php } ?>
+        <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Arunca" onclick="
+               $.post('/games/show/<?php echo $currentGameData['game']->getGameId(); ?>/1',
+                    {   'game_data[value]' : $('input#i0').val(),
+                        'game_data[player]': $('input[name=&#x22;game_data[player]&#x22;][match]').val()
+                    },
+                    function(text){
+                        $('div#ajax-space').html(text);
+                        $('input#i0').val('');
+                        $('input#i0').focus();
+               },'text');
+               " />
+        <hr />
+        <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
+           <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>
+        </li>
+        <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon script">
+            <a class="ui-icon ui-icon-script" href="<?php echo base_url(); ?>games/lists/<?php echo htmlspecialchars($item['id']); ?>"> lista </a>
+        </li>
+  <?php }
 
-    } ?>
+} else { ?>
+</div>
+<?php } ?>

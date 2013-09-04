@@ -14,8 +14,7 @@ class Games extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('games_model');
-        $this->load->model('all_users');
-        $this->load->model('pages_model');
+        $this->load->model('users_model');
     }
     /**
      *  de la index te redirectioneaza pe pagina principala
@@ -43,7 +42,7 @@ class Games extends CI_Controller {
      * vizualizarea jocului nou creat       games/show/<game-id>
      * care la finele functiei se apeleaza un sufix
      */
-    public function newgame() {
+    public function newGame() {
      // 
         $reset_back = false;
         $allow_data = true;
@@ -73,7 +72,7 @@ class Games extends CI_Controller {
                     // oferim acces obiectului bowllingGame_instance ( ce e instanta a 
                     // clasei bowllingGame_lib ) la modelele bazelor de date
                     $this->bowllingGame_instance->games_model   = $this->games_model;
-                    $this->bowllingGame_instance->users_model   = $this->all_users;
+                    $this->bowllingGame_instance->users_model   = $this->users_model;
                     // preluam id-ul nou pentru joc
                     $this->bowllingGame_instance->setGameId(true);
                     $this->currentGameData['game']          = $this->bowllingGame_instance;
@@ -85,13 +84,15 @@ class Games extends CI_Controller {
                               $this->session->sess_write();
                               redirect('games/show/'.abs($i));
                     }
+            } else {
+                
             }
         }
         
-        $this->currentGameData['all-users'] = $this->all_users->get_allusers();
+        $this->currentGameData['all-users'] = $this->users_model->get_allusers();
         $this->load->library('bowllingGame_lib','','bowllingGame_instance');
         $this->bowllingGame_instance->games_model   = $this->games_model;
-        $this->bowllingGame_instance->users_model   = $this->all_users;
+        $this->bowllingGame_instance->users_model   = $this->users_model;
         $this->bowllingGame_instance->setGameId(true);
         $this->currentGameData['game']          = $this->bowllingGame_instance;
         $this->currentGameData['game-data'] = $this->currentGameData['game']->getData();
@@ -110,7 +111,7 @@ class Games extends CI_Controller {
      * extragem statutul jocului din obiectul bowllingGame_instance
      */
     
-    public function show($game_id) {
+    public function show($game_id,$request_partial = 0) {
         
         $return_back = false;
         $userList   = array();
@@ -121,26 +122,21 @@ class Games extends CI_Controller {
             if(empty($userList) || !is_array($userList) )
                 $return_back    = true;
         };
-
-        if($return_back) {
-            redirect('games/newgame');
-
-        }
-
+        
         // informatia primita din formulat de la prima postare de date..
         $data = ( isset($_POST['game_data']) ? $_POST['game_data'] : array() );
         // incarcam modlele tablelelor games si users
         $this->load->model('games_model');
-        $this->load->model('all_users');
+        $this->load->model('users_model');
         // rin in plus // a fost commentat
         // $this->currentGameData['main_info'] = $this->games_model->get();
-        $this->currentGameData['all-users'] = $this->all_users->get_allusers();
+        $this->currentGameData['all-users'] = $this->users_model->get_allusers();
         // incarcam clasa bowwlingGame_lib in $this->bollingGame_instance
         $this->load->library('bowllingGame_lib','','bowllingGame_instance');
         // oferim acces obiectului bowllingGame_instance ( ce e instanta a 
         // clasei bowllingGame_lib ) la modelele bazelor de date
         $this->bowllingGame_instance->games_model   = $this->games_model;
-        $this->bowllingGame_instance->users_model   = $this->all_users;
+        $this->bowllingGame_instance->users_model   = $this->users_model;
         // indicam in obiectul bowllingGame_instance id jocului current
         $this->bowllingGame_instance->setGameId($game_id);
         // accesam obiectul bowllingGame_instance la o variabila ce va fi trimisa spre view
@@ -151,6 +147,10 @@ class Games extends CI_Controller {
         $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
         $this->currentGameData['game-players']  = $userList;
         
+        if( $return_back && empty($this->currentGameData['game-data']) ) {
+            redirect('games/newgame');
+        }
+        
         // incarcam datele in baza de date si preluam din nou
         // statutul di valorile jocului ce au putut sa se schimbe in caz
         // ca datele incarcate au fost acceptate.
@@ -159,6 +159,7 @@ class Games extends CI_Controller {
                     $this->currentGameData['game-data']     = $this->currentGameData['game']->getData();
                     $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
             }
+        $this->currentGameData['ajax-request']  = !empty($request_partial);
         // apelam view-ul si ii oferim datele necesare pentru afisare
         $this->display_lib->users_page(array(
             'currentGameData'   => $this->currentGameData

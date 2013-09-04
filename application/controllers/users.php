@@ -10,8 +10,7 @@ class Users extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('pages_model');
-        $this->load->model('all_users');
+        $this->load->model('users_model');
         $this->load->library('captcha_lib');
     }
     
@@ -27,7 +26,7 @@ class Users extends CI_Controller {
  * si apoi trece prin clasa display pentru a afisha datele
  */
     public function allUsers() {
-        $data['all_users'] = $this->all_users->get_allusers();
+        $data['all_users'] = $this->users_model->get_allusers();
 
         $name = 'pages/pages';
 
@@ -48,7 +47,7 @@ class Users extends CI_Controller {
 
             $this->display_lib->users_page($data, $name);
         } else {
-            $this->form_validation->set_rules($this->pages_model->field_rules);
+            $this->form_validation->set_rules($this->users_model->field_rules);
 
             $val_res = $this->form_validation->run();
 
@@ -67,7 +66,7 @@ class Users extends CI_Controller {
 
                     $this->display_lib->users_page(array('info' => 'Succes'), 'info');
                     // $this->input->post('users');
-                    $this->pages_model->add_new(array(
+                    $this->users_model->add_new(array(
                         'name' => $name,
                         'surname' => $surname,
                         'nick' => $nick
@@ -96,7 +95,7 @@ class Users extends CI_Controller {
  */
     public function show($id) {
         $data = array();
-        $data ['main_info'] = $this->pages_model->get($id); 
+        $data ['main_info'] = $this->users_model->get($id); 
 
         if ($id) {
 
@@ -117,8 +116,8 @@ class Users extends CI_Controller {
  * va sterge tot utilizatoul dupa id , o line 
  * @param type $user_id integer
  */
-    public function userremove($user_id) {
-        $this->pages_model->delete($user_id);
+    public function userRemove($user_id) {
+        $this->users_model->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
 /**
@@ -126,13 +125,13 @@ class Users extends CI_Controller {
  * @param type $id integer 
  */
     public function edit($id) {
-        $data['main_info'] = $this->pages_model->get($id);
+        $data['main_info'] = $this->users_model->get($id);
 
         if (!empty($data['main_info']) && isset($_POST['edit'])) {
-            $this->form_validation->set_rules($this->pages_model->contact_edit_rules);
+            $this->form_validation->set_rules($this->users_model->contact_edit_rules);
             $val_res = $this->form_validation->run();
             if ($val_res == TRUE) {
-                $this->pages_model->edit($id, array(
+                $this->users_model->edit($id, array(
                     'name' => $this->input->post('name'),
                     'surname' => $this->input->post('surname'),
                     'nick' => $this->input->post('nick')

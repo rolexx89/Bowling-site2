@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'test.local';
+$db['default']['hostname'] = 'bowling.local';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'pass';
 $db['default']['database'] = 'bowling';
