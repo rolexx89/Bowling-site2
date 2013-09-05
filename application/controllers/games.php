@@ -159,11 +159,17 @@ class Games extends CI_Controller {
                     $this->currentGameData['game-data']     = $this->currentGameData['game']->getData();
                     $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
             }
-        $this->currentGameData['ajax-request']  = !empty($request_partial);
+//        $this->currentGameData['ajax-request']  = !empty($request_partial);
         // apelam view-ul si ii oferim datele necesare pentru afisare
-        $this->display_lib->users_page(array(
-            'currentGameData'   => $this->currentGameData
-        ), 'pages/game', $this->currentGameData['ajax-request']);
+        if(empty($request_partial)) {
+            $this->display_lib->users_page(array(
+                'currentGameData'   => $this->currentGameData
+            ), 'pages/game');
+        } else {
+            $this->display_lib->users_page(array(
+                'currentGameData'   => $this->currentGameData
+            ), 'pages/game-json', true);
+        }
     }
     /**
      * actiunea data are ca scop restructurarea datelor pentru a fi mai
