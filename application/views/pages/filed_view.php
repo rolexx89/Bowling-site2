@@ -2,7 +2,11 @@
 <div id="wrapper">
     <div id="content">
 
-
+<hr />
+    <span>
+        <center> <h3> New User </h3></center>
+    </span>
+<hr />
         <form action="<?php echo base_url(); ?>users/filed" method="post">
             <div class="field-set">
                 <div class="field-row">
@@ -47,8 +51,13 @@
                     <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
                     <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
                     </li>
+                     
                 
                 </div>
+                &nbsp;
+                 <hr />
+                     &nbsp;
+                 <hr />
             </div>
         </form>
     </div>

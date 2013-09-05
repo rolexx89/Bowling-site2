@@ -1,5 +1,9 @@
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-
+<hr />
+    <span>
+        <center> <h3> User Date </h3></center>
+    </span>
+<hr />
 <form action="<?php echo base_url(); ?>/users/show/<?php echo htmlspecialchars($main_info['id']); ?>" method="post">
     <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($main_info['id']); ?>" > 
     <div class="field-set">
@@ -43,5 +47,8 @@
             </li>
         
         </div>
+         <hr />
+            &nbsp;
+         <hr />
     </div>
 </form>

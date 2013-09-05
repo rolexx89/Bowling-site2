@@ -1,12 +1,12 @@
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
+<center>
+    <hr />
 <span class="field-name">
             Actions:
         </span>
-        <span class="field-value">
-            <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-contact">
-            <a class="ui-icon ui-icon-contact" href="<?php echo base_url(); ?>pages/filed">Add new user</a> </li>
-        </span>
-<h2>Users List</h2> <center>
+        <hr />
+<h2>Users List</h2> 
+<hr />
 <table  class="list">
 	<tr class="mark">
 		<td><b>N</b></td>
@@ -41,10 +41,7 @@
 		<?php }
 	?>
 </table>
+<hr />
+&nbsp;
+<hr />
 </center>
- <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon script">
-    <a class="ui-icon ui-icon-script" href="<?php echo base_url(); ?>games/lists/<?php echo htmlspecialchars($item['id']); ?>"> lista </a>
- </li>
- <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon play">
-    <a class="ui-icon ui-icon-play" href="<?php echo base_url(); ?>games/newgame"> Newgame </a>
- </li>

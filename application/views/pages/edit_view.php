@@ -1,9 +1,12 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <div id="wrapper">
     <div id="content">
         <form action="<?php echo base_url(); ?>/users/edit/<?php echo htmlspecialchars($main_info['id']); ?>/" method="post" charset="utf-8">
             <div class="field-set">
-                
+                <hr />
+                <span>
+                    <center> <h3> Edit user date </h3></center>
+                </span>
+                <hr />
                 <div class="field-row">
                     <span class="field-name">
                         Name:
@@ -32,13 +35,16 @@
                     </span>
                 </div>
                 <div class="field-row">
-                 <input class="ui-button ui-state-default ui-corner-all" onclick="if(!confirm('Sure, you want to edit this user?')) return false; return true;" type="submit" value="editare" name="edit" >
+                 <input class="ui-button ui-state-default ui-corner-all"  type="submit" value="editare" name="edit" >
                  <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
                  <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
                  </li>
                 
                 </div>
             </div>
+            <hr />
+            &nbsp;
+            <hr />
         </form>
     </div>
 </div>

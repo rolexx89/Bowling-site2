@@ -1,7 +1,7 @@
 <?php if(empty($currentGameData['ajax-request'])) { ?>
-    <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
+<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
     <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-<div id="ajax-space">
+<div id="ajax-space">    
 <?php } ?>
 <?php if(isset($currentGameData['game-status'])) {  // controlam ca datele jocului au fost primite in view
 
@@ -19,6 +19,7 @@
         ?>
         <hr />
         <hr />
+           
         <h3>Game Table</h3>
         <?php
         if(!empty($currentGameData['game-data'])) {
@@ -205,4 +206,5 @@
 
 } else { ?>
 </div>
+        
 <?php } ?>

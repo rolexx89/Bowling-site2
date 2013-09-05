@@ -163,7 +163,7 @@ class Games extends CI_Controller {
         // apelam view-ul si ii oferim datele necesare pentru afisare
         $this->display_lib->users_page(array(
             'currentGameData'   => $this->currentGameData
-        ), 'pages/game');
+        ), 'pages/game', $this->currentGameData['ajax-request']);
     }
     /**
      * actiunea data are ca scop restructurarea datelor pentru a fi mai

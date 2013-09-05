@@ -1,6 +1,10 @@
 
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-
+<hr />
+    <span>
+        <center> <h3> Lists Game-Play </h3></center>
+    </span>
+<hr />
 <?php foreach ($games_list as $games_data) { ?>
     <div class="field-set">
         <div class="field-row">
@@ -20,5 +24,8 @@
 <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
     <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>"> back </a>
 </li>
+<hr />
+   &nbsp;
+<hr />
 </div>
   
