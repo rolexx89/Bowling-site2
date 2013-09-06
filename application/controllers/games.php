@@ -27,12 +27,22 @@ class Games extends CI_Controller {
      * toti utilizatori intru masif care va afisha pe toti printru for
      * afisheaza doar dupa un id 
      */
-    public function lists() {
-       $data = array();
+    public function lists($start_list = 0) {
+        $data = array();
         
-       $this->load->model('games_model');
-       $data['games_list'] = $this->games_model->get(); //tot array-ul va fi doar pe o pagina
-       $this->display_lib->users_page($data, 'pages/game_list');
+        $this->load->model('games_model');
+        
+        $config['base_url']     = base_url().'/games/lists/';
+        $config['total_rows']   = $this->games_model->count();
+        $config['per_page']     = 5; 
+        
+        $data['games_list'] = $this->games_model->get($start_list,$config['per_page']); //tot array-ul va fi doar pe o pagina
+
+        $this->pagination->initialize($config); 
+        
+        $data['page_links'] = $this->pagination->create_links();
+        
+        $this->display_lib->users_page($data, 'pages/game_list');
     }
     
 

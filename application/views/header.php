@@ -10,55 +10,22 @@
 <LINK REL="shortcut icon" TYPE="image/x-icon" HREF="favicon.ico" >
 <LINK REL="icon" TYPE="image/x-icon" HREF="favicon.ico" >
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-<style type="text/css">
-	* {
-		margin	: 0;
-		padding	: 0;
-	}
-	#wall {
-		background	: #222;
-		min-height	: 100%;
-		width		: 100%;
-	}
-
-	#wall #container {
-		width	: 1000px;
-		/*height	: 100%;*/
-		margin	: 0 auto;
-		padding	: 10px;
-		background	: #fff;
-		text-align	: left;
-	}
-
-	html,body,body center.wall {
-		height	: 100%;
-	}
-
-	div#body {
-		min-height	: 360px;
-		padding	: 20px 10px;
-	}
-
-	table.list {
-		min-width	: 540px;
-		font-size	: 11px;
-	}
-	table.list td {
-		margin	: 2px;
-		border	: 1px solid #efefef;
-		padding	: 5px 10px;
-	}
-	table.list tr.mark td {
-		background	: #dedede;
-	}
-</style>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 </head>
 <body>
+<div id="splash-layer" style="position:fixed;top:0;left:0;height:100%;width:100%;z-index: 100;background:#efefef;">
+    <div style="position: absolute;top: 20%;left:0;height: 60%;width:100%;text-align: center;">
+        <img src="/stylesheets/images/loading.jpg" style="height: 100%;width: auto;" />
+    </div>
+</div>
+<script type="text/javascript">
+    $('#splash-layer').fadeOut('slow');
+</script>
 <center class="wall" >
 <div id="wall">
    <div id="container">
       <div id="header">
-         <table style="width: 100%;">
+         <table style="width: 100%;"cellspacing="0">
               <tr valign="top" height="1">
                 <td width="1">
                    <span>
@@ -70,9 +37,8 @@
                 </td>
                </tr>
           </table>
-                  <div class="nav" align="center" >
+                  <div class="nav">
                         <a class="but-nav" href="<?php echo base_url(); ?>users/all">Users</a>
-                        <a class="but-nav" href="<?php echo base_url(); ?>pages/filed">New-Users</a>
                         <a class="but-nav" href="<?php echo base_url(); ?>games/newgame">New-Game</a>
                         <a class="but-nav" href="<?php echo base_url(); ?>games/lists/">List-Games</a>
                   </div>

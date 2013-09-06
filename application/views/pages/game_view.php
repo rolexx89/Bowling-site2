@@ -1,5 +1,3 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 <script type="text/javascript">
     function updateAjaxSpace(data) {
         $.post('/games/show/<?php echo $currentGameData['game']->getGameId(); ?>/1',

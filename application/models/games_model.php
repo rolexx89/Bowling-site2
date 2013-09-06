@@ -16,10 +16,24 @@ class Games_model extends CI_Model {
      * @param type $obj_id returneaza rezultatul al un array al unei inregistrari
      * @return type el va vrea aceste date dupa game_id 
      */
-    public function get() {
+    public function get($offset = 0,$limit = 0) {
         $this->db->group_by('game_id');
-        $query = $this->db->get($this->table);       
+        if( $offset || $limit ) {
+            if($limit) {
+                $this->db->limit($limit,$offset);
+            } else {
+                $this->db->limit($offset);
+            }
+        };
+        $query = $this->db->get($this->table);
         return $query->result_array();
+    }
+    
+    public function count() {
+        $this->db->select(' 1 ',false);
+        $this->db->group_by('game_id');
+        $query  = $this->db->get($this->table);
+        return $query->num_rows();
     }
     /**
      * 
