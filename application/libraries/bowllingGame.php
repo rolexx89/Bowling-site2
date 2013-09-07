@@ -3,16 +3,16 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class BowllingGame_lib {
+class BowllingGame {
     /*
-            DB  table structure
+            DB  table structured
             Table [BowllingGame]
             game_id     round   user_id try_n   value
     */
     private $game_id        = false;
     // proprietatile publice unde pot fi accesate modelle bazelor de date
-    public  $games_model    = false;
-    public  $users_model    = false;
+    public  $gamesModel    = false;
+    public  $usersModel    = false;
    
     function __construct() {
     }
@@ -21,7 +21,7 @@ class BowllingGame_lib {
         if($game_id === true) {
             // daca introducem in functie true
             // atunci ea va returna un id nou si neutilizat
-            $this->game_id  = $this->games_model->getNewGameId();
+            $this->game_id  = $this->gamesModel->getNewGameId();
         } else {
             $this->game_id  = @abs($game_id);
         }
@@ -34,7 +34,7 @@ class BowllingGame_lib {
         // detectam daca id-ul jocului a fost specificat
         if(!$this->game_id) return false;
         // selectam datele jocului curent
-        $data   = $this->games_model->getData($this->game_id);
+        $data   = $this->gamesModel->getData($this->game_id);
         return $data;
     }
     
@@ -178,7 +178,7 @@ class BowllingGame_lib {
             if(empty($player))
                     return false;
             // controlam daca utilizatorul exista
-            if(!$this->users_model->checkUserById($player))
+            if(!$this->usersModel->checkUserById($player))
                     return false;
 
             // functia data anonima returneaza cite array-uri din array-ul dat
@@ -219,7 +219,7 @@ class BowllingGame_lib {
                         ( $currentRound == 10 && $count_try < 3 )
                     )
                 ) {
-                        $this->games_model->putData(
+                        $this->gamesModel->putData(
                             array(
                                 'game_id'   => abs($this->game_id),
                                 'round'     => abs($currentRound),

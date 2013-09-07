@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class users_model extends CI_Model {
+class usersModel extends CI_Model {
 
     private $table  = 'users';
     public  $idkey  = 'id'; //id index al fecarui utilizator
@@ -11,7 +11,7 @@ class users_model extends CI_Model {
      *validarea dateleor pentru crearea utilizatorului
      * @var type array
      */
-    public $field_rules = array(
+    public $fieldRules = array(
         array(
             'field' => 'name',
             'label' => 'nume',
@@ -37,7 +37,7 @@ class users_model extends CI_Model {
      *validarea datelor dupa editare
      * @var type array
      */
-    public $contact_edit_rules = array(
+    public $contactEditRules = array(
         array(
             'field' => 'name',
             'label' => 'nume',
@@ -58,7 +58,7 @@ class users_model extends CI_Model {
  * introducerea unui user nou in bd sql
  * @param type $users_data array
  */
-    public function add_new($users_data) {
+    public function addNew($users_data) {
        
         $this->db->insert('users', $users_data);
     }
@@ -94,7 +94,7 @@ class users_model extends CI_Model {
  * cu ajutorul foreach preaiea fiecare  utilizator
  * @return type integer $list
  */   
-    public function get_allusers() {   
+    public function GetAllUsers() {   
         $this->db->order_by('id', 'desc');
         $query = $this->db->get($this->table);
         $data   = $query->result_array(); //afiseaza toti utilizatori intrun array

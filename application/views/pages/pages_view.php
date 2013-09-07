@@ -5,7 +5,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $('#splash-layer').fadeOut('slow');
+    $('#splash-layer').fadeOut(700).css({display:"block"});
 </script>
 <hr />
 <center>
@@ -27,7 +27,7 @@
        
 	 <?php
          $user_count = 0;
-         foreach ($all_users as $item) { ?>
+         foreach ($allUsers as $item) { ?>
        		<tr>
                  
 			<td>

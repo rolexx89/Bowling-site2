@@ -3,12 +3,12 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Games_model extends CI_Model {
+class gamesModel extends CI_Model {
 
     public $table = 'bowling-game'; //Numele tabelului
     public $idkey = 'game_id'; //id index al fecarui utilizator
         
-    public function Games_model() {
+    public function gamesModel() {
         parent::__construct();
     }
     /**
@@ -41,9 +41,7 @@ class Games_model extends CI_Model {
      */
     public function getNewGameId() {
        
-//        $this->db->insert_id();
-        $this->db->order_by('game_id','DESC');
-        $this->db->limit(1);
+        $this->db->select_max('game_id');
         $query  = $this->db->get($this->table);
         $data   = $query->result_array();
         

@@ -6,31 +6,25 @@ if (!defined('BASEPATH'))
 class Users extends CI_Controller {
 
     public   $load;
-    public   $all_users;
+    public   $allUsers;
 
     function __construct() {
         parent::__construct();
-        $this->load->model('users_model');
+        $this->load->model('UsersModel');
         $this->load->library('captcha_lib');
     }
+ 
     
 /**
- * redirectioneaza la pagina initiala 
- */
-    public function index() {
-        redirect(base_url());
-    }
-    
-/**
- * acceseaza modelul allUsers si inscrie in array $data['all_users']
+ * acceseaza modelul allUsers si inscrie in array $data['allUsers']
  * si apoi trece prin clasa display pentru a afisha datele
  */
     public function allUsers() {
-        $data['all_users'] = $this->users_model->get_allusers();
+        $data['allUsers'] = $this->UsersModel->GetAllUsers();
 
         $name = 'pages/pages';
 
-        $this->display_lib->users_page($data, $name);
+        $this->display_lib->usersPage($data, $name);
        
     }
 /**
@@ -45,9 +39,9 @@ class Users extends CI_Controller {
 
             $name = 'pages/filed';
 
-            $this->display_lib->users_page($data, $name);
+            $this->display_lib->usersPage($data, $name);
         } else {
-            $this->form_validation->set_rules($this->users_model->field_rules);
+            $this->form_validation->set_rules($this->UsersModel->fieldRules);
 
             $val_res = $this->form_validation->run();
 
@@ -64,9 +58,9 @@ class Users extends CI_Controller {
                     $surname = $this->input->post('surname');
                     $nick = $this->input->post('nick');
 
-                    $this->display_lib->users_page(array('info' => 'Succes'), 'info');
+                    $this->display_lib->usersPage(array('info' => 'Succes'), 'info');
                     // $this->input->post('users');
-                    $this->users_model->add_new(array(
+                    $this->UsersModel->addNew(array(
                         'name' => $name,
                         'surname' => $surname,
                         'nick' => $nick
@@ -76,13 +70,13 @@ class Users extends CI_Controller {
                     $data['imgcode'] = $this->captcha_lib->captcha_actions();
                     $data['info'] = 'nui corec';
                     $name = 'pages/filed';
-                    $this->display_lib->users_page($data, $name);
+                    $this->display_lib->usersPage($data, $name);
                 }
             } else {
                 $data['imgcode'] = $this->captcha_lib->captcha_actions();
                 $data['info'] = '';
                 $name = 'pages/filed';
-                $this->display_lib->users_page($data, $name);
+                $this->display_lib->usersPage($data, $name);
             }
         }
     }
@@ -95,7 +89,7 @@ class Users extends CI_Controller {
  */
     public function show($id) {
         $data = array();
-        $data ['main_info'] = $this->users_model->get($id); 
+        $data ['main_info'] = $this->UsersModel->get($id); 
 
         if ($id) {
 
@@ -103,12 +97,12 @@ class Users extends CI_Controller {
                 $data['info'] = 'nu exista asa pagina';
                 $name = 'info';
 
-                $this->display_lib->user_info_page($data, $name);
+                $this->display_lib->userInfoPage($data, $name);
             } else {
                
                 $name = 'pages/page';
 
-                $this->display_lib->users_page($data, $name);
+                $this->display_lib->usersPage($data, $name);
             }
          }
      }
@@ -117,7 +111,7 @@ class Users extends CI_Controller {
  * @param type $user_id integer
  */
     public function userRemove($user_id) {
-        $this->users_model->delete($user_id);
+        $this->UsersModel->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
 /**
@@ -125,13 +119,13 @@ class Users extends CI_Controller {
  * @param type $id integer 
  */
     public function edit($id) {
-        $data['main_info'] = $this->users_model->get($id);
+        $data['main_info'] = $this->UsersModel->get($id);
 
         if (!empty($data['main_info']) && isset($_POST['edit'])) {
-            $this->form_validation->set_rules($this->users_model->contact_edit_rules);
+            $this->form_validation->set_rules($this->UsersModel->contactEditRules);
             $val_res = $this->form_validation->run();
             if ($val_res == TRUE) {
-                $this->users_model->edit($id, array(
+                $this->UsersModel->edit($id, array(
                     'name' => $this->input->post('name'),
                     'surname' => $this->input->post('surname'),
                     'nick' => $this->input->post('nick')
@@ -140,7 +134,7 @@ class Users extends CI_Controller {
             } 
         }
         
-        $this->display_lib->users_page($data, 'pages/edit');
+        $this->display_lib->usersPage($data, 'pages/edit');
         
     }
 

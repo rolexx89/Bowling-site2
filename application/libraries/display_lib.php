@@ -3,13 +3,16 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Display_lib {
+class Display_Lib {
+    
+    function __construct() {
+    }
 /**
  * cu ajutorul acestei classe putem lega controlerul si pagena view
  * @param type $data array continutului pageni
  * @param type $name denumirea pageni dupa url
  */
-    public function users_page($data, $name, $only_content = false) {
+    public function usersPage($data, $name, $only_content = false) {
         $CI = &get_instance();
         if(!$only_content)
             $CI->load->view('header', $data);
@@ -25,7 +28,7 @@ class Display_lib {
  * @param type $data continutul de pe pagina
  * @param type $name url
  */
-    public function user_info_page($data, $name) {
+    public function userInfoPage($data, $name) {
         $CI = &get_instance();
         if(method_exists($CI, 'actionSuffix'))
             $CI->actionSuffix($data);
