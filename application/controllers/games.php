@@ -6,8 +6,8 @@ if (!defined('BASEPATH'))
 class Games extends CI_Controller {
 /**
  *
- * @var type currentGameData in aceasta variabila se salveaza datele in timpul executie
- * pentru a fi usor accesibile mai multor actiuni concomitent
+ * @var array currentGameData datele la executie sa fie
+ * mai multe actiuni
  */
     public $currentGameData    = array();
     
@@ -15,25 +15,22 @@ class Games extends CI_Controller {
         parent::__construct();
         $this->load->model('gamesModel');
         $this->load->model('usersModel');
-    }
+    }     
     /**
-     *  de la index te redirectioneaza pe pagina principala
-     */
-    
-    /**
-     * toti utilizatori intru masif care va afisha pe toti printru for
-     * afisheaza doar dupa un id 
+     * @var array $data
+     * @var array $start_list  toti utilizatori in array pentru afishrea pe toti dupa id 
+     * @var int $limit - per_page
+     * 
      */
     public function lists($start_list = 0) {
         $data = array();
-        
         $this->load->model('gamesModel');
         
         $config['base_url']     = base_url().'/games/lists/';
         $config['total_rows']   = $this->gamesModel->count();
         $config['per_page']     = 5; 
         
-        $data['games_list'] = $this->gamesModel->get($start_list,$config['per_page']); //tot array-ul va fi doar pe o pagina
+        $data['games_list'] = $this->gamesModel->get($start_list,$config['per_page']);
 
         $this->pagination->initialize($config); 
         
@@ -44,13 +41,11 @@ class Games extends CI_Controller {
     
 
     /**
-     * informatia primita din formulat de la prima postare de date..
      * si se preia id-ul noului joc, dupa ce se face readresarea spre
      * vizualizarea jocului nou creat       games/show/<game-id>
-     * care la finele functiei se apeleaza un sufix
      */
     public function newGame() {
-     // 
+        
         $reset_back = false;
         $allow_data = true;
         $loading_list   = false;
@@ -76,14 +71,13 @@ class Games extends CI_Controller {
             $data   = ( isset($_POST['game_data']) ? $_POST['game_data'] : array() );
             if( isset($data['value']) && isset($data['player']) ) {
                     $this->load->library('BowllingGame','','bowllingGame_instance');
-                    // oferim acces obiectului bowllingGame_instance ( ce e instanta a 
-                    // clasei BowllingGame ) la modelele bazelor de date
+                    
                     $this->bowllingGame_instance->gamesModel   = $this->gamesModel;
                     $this->bowllingGame_instance->usersModel   = $this->usersModel;
-                    // preluam id-ul nou pentru joc
+                    
                     $this->bowllingGame_instance->setGameId(true);
                     $this->currentGameData['game']          = $this->bowllingGame_instance;
-//                    var_dump($userList,$data);
+
                     if($this->currentGameData['game']->pushData($data['value'],$data['player'],$userList) === true) {
                               $i = $this->currentGameData['game']->getGameId();
                               $this->session->userdata['gameUserList_'.$i]  = $userList;
@@ -113,9 +107,10 @@ class Games extends CI_Controller {
     }
     
     /**
-     * informatia primita din formulat de la prima postare de date..
      * incarcam modlele tablelelor games si users
+     * incarcam clasa bowwlingGame_lib in $this->bollingGame_instance
      * extragem statutul jocului din obiectul bowllingGame_instance
+     * @param array $userList 
      */
     
     public function show($game_id,$request_partial = 0) {
@@ -130,44 +125,42 @@ class Games extends CI_Controller {
                 $return_back    = true;
         };
         
-        // informatia primita din formulat de la prima postare de date..
         $data = ( isset($_POST['game_data']) ? $_POST['game_data'] : array() );
-        // incarcam modlele tablelelor games si users
+
         $this->load->model('gamesModel');
         $this->load->model('usersModel');
-        // rin in plus // a fost commentat
-        // $this->currentGameData['main_info'] = $this->gamesModel->get();
+        
         $this->currentGameData['all-users'] = $this->usersModel->GetAllUsers();
-        // incarcam clasa bowwlingGame_lib in $this->bollingGame_instance
+
         $this->load->library('BowllingGame','','bowllingGame_instance');
-        // oferim acces obiectului bowllingGame_instance ( ce e instanta a 
-        // clasei BowllingGame ) la modelele bazelor de date
+
         $this->bowllingGame_instance->gamesModel   = $this->gamesModel;
         $this->bowllingGame_instance->usersModel   = $this->usersModel;
-        // indicam in obiectul bowllingGame_instance id jocului current
+
         $this->bowllingGame_instance->setGameId($game_id);
-        // accesam obiectul bowllingGame_instance la o variabila ce va fi trimisa spre view
+     
         $this->currentGameData['game']          = $this->bowllingGame_instance;
-        // extragem din obiectul bowllingGame_instance datele jocului current
+       
         $this->currentGameData['game-data'] = $this->currentGameData['game']->getData();
-        // extragem statutul jocului din obiectul bowllingGame_instance
+       
         $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
         $this->currentGameData['game-players']  = $userList;
         
+        //controlam daca nu exita id cu asa joaca ne redirectioneaza la joc nou
         if( $return_back && empty($this->currentGameData['game-data']) ) {
             redirect('games/newgame');
         }
         
-        // incarcam datele in baza de date si preluam din nou
-        // statutul di valorile jocului ce au putut sa se schimbe in caz
-        // ca datele incarcate au fost acceptate.
+        // incarcam din nou jocul cu statultul 
+        // si valorile jocului pentru a prelungi jocul
         if(isset($data['value']) && isset($data['player']))
             if($this->currentGameData['game']->pushData($data['value'],$data['player'],$userList) === true) {
                     $this->currentGameData['game-data']     = $this->currentGameData['game']->getData();
                     $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
             }
-//        $this->currentGameData['ajax-request']  = !empty($request_partial);
-        // apelam view-ul si ii oferim datele necesare pentru afisare
+
+        // apelam view-urile cu datele necesare ,
+        // redirectionarea la view potrevit 
         if(empty($request_partial)) {
             $this->display_lib->usersPage(array(
                 'currentGameData'   => $this->currentGameData
@@ -180,9 +173,10 @@ class Games extends CI_Controller {
     }
     /**
      * 
-     * @param mixed $dataPosted == $d
+     * @param mixed $dataPosted == $d returneaza tabelul jocului dumpa urmatoarile indici
      * @param mixed $d show data live game
      */
+   
     public function actionSuffix(&$dataPosted) {
            if( isset($dataPosted['currentGameData']['game-data'])
                 &&
@@ -191,19 +185,19 @@ class Games extends CI_Controller {
             $d  = array(
                     'users' => array()
                        );
-            foreach ( $dataPosted['currentGameData']['game-data'] as $row ) {
-                if(!isset($d['users'][$row['user_id']]))
-                    $d['users'][$row['user_id']]    = array(
-                            'user_data' => $dataPosted['currentGameData']['all-users'][$row['user_id']],
+            foreach ( $dataPosted['currentGameData']['game-data'] as $r ) {
+                if(!isset($d['users'][$r['user_id']]))
+                    $d['users'][$r['user_id']]    = array(
+                            'user_data' => $dataPosted['currentGameData']['all-users'][$r['user_id']],
                             'rounds'    => array(),
                             'total'     => 0
                         );
-                
-                if(!isset($d['users'][$row['user_id']]['rounds'][$row['round']]))
-                    $d['users'][$row['user_id']]['rounds'][$row['round']]   = array();
+                $vTemp  = &$d['users'][$r['user_id']]['rounds'];
+                if(!isset($vTemp[$r['round']]))
+                    $vTemp[$r['round']]   = array();
 
-                $d['users'][$row['user_id']]['rounds'][$row['round']][] = $row;
-                $d['users'][$row['user_id']]['total']   += $row['value'];
+                $vTemp[$r['round']][] = $r;
+                $d['users'][$r['user_id']]['total']   += $r['value'];
             }
             $dataPosted['currentGameData']['game-data-grouped'] = $d;
         }

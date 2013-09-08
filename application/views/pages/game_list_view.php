@@ -1,5 +1,3 @@
-
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <hr />
     <span>
         <center> <h3> Lists Game-Play </h3></center>

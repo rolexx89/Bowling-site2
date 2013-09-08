@@ -1,11 +1,10 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <div id="splash-layer" style="position:fixed;top:0;left:0;height:100%;width:100%;z-index: 100;background:#efefef;">
     <div style="position: absolute;top: 20%;left:0;height: 60%;width:100%;text-align: center;">
         <img src="/stylesheets/images/loading.jpg" style="height: 100%;width: auto;" />
     </div>
 </div>
 <script type="text/javascript">
-    $('#splash-layer').fadeOut(700).css({display:"block"});
+    $('#splash-layer').fadeOut('slow');
 </script>
 <hr />
 <center>
@@ -60,7 +59,7 @@
     <table>
         <tr>
             <td>
-<a class="but-nav" href="<?php echo base_url(); ?>pages/filed">New-Users</a>
+<a class="but-nav" href="<?php echo base_url(); ?>pages/field">New-Users</a>
             </td>
         </tr>
     </table>

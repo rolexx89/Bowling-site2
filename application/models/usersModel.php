@@ -5,11 +5,15 @@ if (!defined('BASEPATH'))
 
 class usersModel extends CI_Model {
 
-    private $table  = 'users';
-    public  $idkey  = 'id'; //id index al fecarui utilizator
     /**
-     *validarea dateleor pentru crearea utilizatorului
-     * @var type array
+     * @var $table numele tabelului
+     * @var $idkey id  tabelului
+     */
+    private $table = 'users';
+    public $idkey = 'id';
+
+    /**
+     * @var array $fieldRulers validarea dateleor utilizatorului
      */
     public $fieldRules = array(
         array(
@@ -33,9 +37,9 @@ class usersModel extends CI_Model {
             'rules' => 'required|numeric|exact_length[5]'
         )
     );
+
     /**
-     *validarea datelor dupa editare
-     * @var type array
+     * @var array $contactEditRules validarea datelor la editare
      */
     public $contactEditRules = array(
         array(
@@ -54,66 +58,70 @@ class usersModel extends CI_Model {
             'rules' => 'trim|required|xss_clean|max_leangth[70]'
         )
     );
-/**
- * introducerea unui user nou in bd sql
- * @param type $users_data array
- */
+
+    /**
+     * @param array $users_data introducerea unui user nou in bd sql
+     */
     public function addNew($users_data) {
-       
+
         $this->db->insert('users', $users_data);
     }
-/**
- * stergearea unui utilizator dupa id
- * @param type $id integer
- */
+
+    /**
+     * stergearea unui utilizator dupa id
+     * @param integer $id stergearea utilizator dupa id
+     */
     function delete($id) {
         $this->db->where('id', $id);
         $this->db->delete('users');
     }
-/**
- * etidatrea utilizatorului dupa id si editarea utilizatorului
- * @param type $id integer
- * @param type $data array
- */
+
+    /**
+     * etidatrea utilizatorului dupa id si editarea utilizatorului
+     * @param type $id integer
+     * @param type $data string
+     */
     public function edit($id, $data) {
         $this->db->where('id', $id);
         $query = $this->db->update('users', $data);
     }
+
     /**
      * preluarea toti utilizatori dupa idKey
-     * @param type $obj_id integer
-     * @return type row_array
+     * @param int $obj_id 
+     * @return row_array
      */
     public function get($obj_id) {
         $this->db->where($this->idkey, $obj_id);
         $query = $this->db->get($this->table);
         return $query->row_array();
     }
-/**
- * preiea toti utilizatori din array dupa id si 
- * cu ajutorul foreach preaiea fiecare  utilizator
- * @return type integer $list
- */   
-    public function GetAllUsers() {   
+
+    /**
+     * @return $list preiea toti utilizatori din bd dupa id si preaiea utilizatori
+     */
+    public function GetAllUsers() {
+
         $this->db->order_by('id', 'desc');
         $query = $this->db->get($this->table);
-        $data   = $query->result_array(); //afiseaza toti utilizatori intrun array
-        $list   = array();
-        foreach($data as $user)
-            $list[$user['id']]  = $user;
+        $data = $query->result_array(); 
+        $list = array();
+        foreach ($data as $user)
+            $list[$user['id']] = $user;
         return $list;
     }
+
     /**
-     * verifica daca utilizatori daca nare valoare negativa si daca exista in bd
-     * @param type $user_id integer
-     * @return type integer
+     * @param int $user_id verifica daca utilizatori daca nare valoare negativa 
+     * si daca exista in bd
+     * @return integer
      */
     public function checkUserById($user_id) {
-        $user_id    = abs(0+$user_id);
-        $this->db->where('id',$user_id);
+//      $user_id    = abs(0+$user_id);
+        $this->db->where('id', $user_id);
         $this->db->limit(1);
-        $query  = $this->db->get($this->table);
-        $data   = $query->result_array();
+        $query = $this->db->get($this->table);
+        $data = $query->result_array();
         return ( empty($data) ? false : $data[0] );
     }
 

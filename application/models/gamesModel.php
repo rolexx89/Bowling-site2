@@ -4,17 +4,20 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class gamesModel extends CI_Model {
-
-    public $table = 'bowling-game'; //Numele tabelului
-    public $idkey = 'game_id'; //id index al fecarui utilizator
+/**
+ * @var $table Numele tabelului
+ * @var $idkey id jocului
+ */
+    public $table = 'bowling-game'; 
+    public $idkey = 'game_id'; 
         
     public function gamesModel() {
         parent::__construct();
     }
-    /**
-     * 
-     * @param type $obj_id returneaza rezultatul al un array al unei inregistrari
-     * @return type el va vrea aceste date dupa game_id 
+  /**
+     * @param array $offset toate datele inregistrate
+     * @param int $limit afiseaza toate listele jocurilor ,limita de 5
+     * @return type array
      */
     public function get($offset = 0,$limit = 0) {
         $this->db->group_by('game_id');
@@ -28,7 +31,11 @@ class gamesModel extends CI_Model {
         $query = $this->db->get($this->table);
         return $query->result_array();
     }
-    
+    /**
+     * slect('1',false) in celulele cu datele selectate se va inlocui cu 1 
+     * pentru nu a incarca datele  
+     * @return int caluculeaza chite jocuri sunt
+     */
     public function count() {
         $this->db->select(' 1 ',false);
         $this->db->group_by('game_id');
@@ -36,8 +43,8 @@ class gamesModel extends CI_Model {
         return $query->num_rows();
     }
     /**
-     * 
-     * @return type un tip interger cu abs (fara numere negative)
+     * la selectarea utilizatorilor se creaza un joc nou
+     * @return int  $data[0]['game_id'] id_jocului nou
      */
     public function getNewGameId() {
        
@@ -49,15 +56,15 @@ class gamesModel extends CI_Model {
     }
     /**
      * 
-     * @param type $data inscrie in baza de date datele games
+     * @param numeric $data inscrie in bd valorile
      */
     public function putData($data) {
         $this->db->insert($this->table,$data);
     }
     /**
      * 
-     * @param type $game_id se ea datele dupa fiecare id din games
-     * @return type returneaza un array cu toate datele jocului
+     * @param numeric $game_id se ea datele dupa fiecare id
+     * @return array  datele jocului
      */
     public function getData($game_id) {
         $this->db->where('game_id', $game_id);

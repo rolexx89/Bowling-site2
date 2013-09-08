@@ -1,16 +1,14 @@
 <?php
-	header("Content-type: text/html;charset=utf-8");
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+	header("Content-type: text/html;charset=utf-8");?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
 <META http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <title>Bowling</title>
-<LINK REL="shortcut icon" TYPE="image/x-icon" HREF="favicon.ico" >
-<LINK REL="icon" TYPE="image/x-icon" HREF="favicon.ico" >
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="/scripts/jquery-1.8.2.min.js"></script>
 </head>
 <body>
 

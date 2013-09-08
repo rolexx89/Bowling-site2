@@ -42,7 +42,7 @@ $route['default_controller'] = "users/allUsers";
 $route['404_override']       = '';
 
 $route['users/all']          = "users/allUsers";
-$route['pages/filed']        = 'users/filed';
+$route['pages/field']        = 'users/field';
 
 
 /* End of file routes.php */

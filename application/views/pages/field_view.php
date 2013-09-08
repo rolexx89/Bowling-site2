@@ -1,4 +1,3 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <div id="wrapper">
     <div id="content">
 
@@ -7,7 +6,7 @@
         <center> <h3> New User </h3></center>
     </span>
 <hr />
-        <form action="<?php echo base_url(); ?>users/filed" method="post">
+        <form action="<?php echo base_url(); ?>users/field" method="post">
             <div class="field-set">
                 <div class="field-row">
                     <span class="field-name">

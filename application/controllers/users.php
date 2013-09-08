@@ -5,9 +5,6 @@ if (!defined('BASEPATH'))
 
 class Users extends CI_Controller {
 
-    public   $load;
-    public   $allUsers;
-
     function __construct() {
         parent::__construct();
         $this->load->model('UsersModel');
@@ -16,8 +13,8 @@ class Users extends CI_Controller {
  
     
 /**
- * acceseaza modelul allUsers si inscrie in array $data['allUsers']
- * si apoi trece prin clasa display pentru a afisha datele
+ * modelu allUsers si inscrie dtele $data['allUsers']
+ * si apoi trece la view
  */
     public function allUsers() {
         $data['allUsers'] = $this->UsersModel->GetAllUsers();
@@ -28,16 +25,16 @@ class Users extends CI_Controller {
        
     }
 /**
- * functia filed aceasta e field introducerea datelor utilizatorului in bd 
- * crearea si captcha
+ * functia  field introducerea datelor utilizatorului in bd 
+ * si controlului cu ajutorul captcha
  */
-    public function filed() {
+    public function field() {
         
         if (!isset($_POST['send_message'])) {
             $data['imgcode'] = $this->captcha_lib->captcha_actions();
             $data['info'] = '';
 
-            $name = 'pages/filed';
+            $name = 'pages/field';
 
             $this->display_lib->usersPage($data, $name);
         } else {
@@ -69,23 +66,22 @@ class Users extends CI_Controller {
                 } else {
                     $data['imgcode'] = $this->captcha_lib->captcha_actions();
                     $data['info'] = 'nui corec';
-                    $name = 'pages/filed';
+                    $name = 'pages/field';
                     $this->display_lib->usersPage($data, $name);
                 }
             } else {
                 $data['imgcode'] = $this->captcha_lib->captcha_actions();
                 $data['info'] = '';
-                $name = 'pages/filed';
+                $name = 'pages/field';
                 $this->display_lib->usersPage($data, $name);
             }
         }
     }
 /**
  * 
- * @param type $id un array care prin id utilizatorului 
- * prea toate datele utilizatorului
- * tot araiul va fi doar pe o pagina
- * $data['info'] acest array va fi afishat doar chind in url scriem nu crecta pagina
+ * @param int $id dupa id gaseshte utilizatorul
+ * si afiseaza datele lui, 
+ * if nui asa id mesajul  $data['info']= pagina nu exista
  */
     public function show($id) {
         $data = array();
@@ -99,7 +95,6 @@ class Users extends CI_Controller {
 
                 $this->display_lib->userInfoPage($data, $name);
             } else {
-               
                 $name = 'pages/page';
 
                 $this->display_lib->usersPage($data, $name);
@@ -107,16 +102,14 @@ class Users extends CI_Controller {
          }
      }
 /**
- * va sterge tot utilizatoul dupa id , o line 
- * @param type $user_id integer
+ * @param int $user_id va sterge tot utilizatoul dupa id
  */
     public function userRemove($user_id) {
         $this->UsersModel->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
 /**
- * dupa id va fi efectuat edit pentru editarea utilizatorului
- * @param type $id integer 
+ * @param int $id va edita utilizator dupa id 
  */
     public function edit($id) {
         $data['main_info'] = $this->UsersModel->get($id);

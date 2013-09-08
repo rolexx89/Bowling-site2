@@ -1,4 +1,3 @@
-<link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
 <hr />
     <span>
         <center> <h3> User Date </h3></center>
