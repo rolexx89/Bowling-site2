@@ -20,10 +20,12 @@
 <div class="pages">
     <?php echo $page_links; ?>
 </div>
-<li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
-    <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>games/newgame"> NewGames </a>
-</li>
+
 <hr />                   
-   &nbsp;
+<div id="header">
+    <div class="nav">
+        <a class="but-nav" href="<?php echo base_url(); ?>games/newgame">New-Game</a>
+    </div>
+</div>
 <hr />
   

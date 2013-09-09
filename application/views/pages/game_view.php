@@ -21,13 +21,15 @@
     if( $currentGameData['game-status']['status'] != "completed" ) { ?>
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
         <?php                   
-            // afisam utilizatorii ce pot intra in joc pentru selecare
+            // afiseaza lista tuturor user pentru a ii selecta 
             if( $currentGameData['game-status']['allowed-new'] == true
                 && empty($currentGameData['game-players'])
                 && empty($currentGameData['game-data']) ) {
                 ?><div style="padding-left: 30px;padding-top: 10px;">
+                    <center>
                     <h4>Select User</h4>
                     <sub>While the first round is not finished in game can enter other players</sub>
+                    </center>
                     <?php foreach ( $currentGameData['all-users'] as $item_id => $item )
                         if(!isset($currentGameData['game-data-grouped']['users'][$item_id])) { ?>
                             <label class="ui-state-default" >
@@ -40,11 +42,21 @@
                             </label>
                     <?php }
                 ?></div>
-                <input type="submit">
+            <div id="header">
+                    <div class="nav">
+                        <hr />
+                <input class="ui-button ui-state-default ui-corner-all" type="submit">
+                    </div>
+            </div>
                 <?php
             } else if( empty($currentGameData['game-data']) ) {
-                // afisam utilizatorii ce deja joaca
-                ?><h4>Select User</h4><?php
+                // afisam lista useri care joaca
+                //la control daca putem arunca sau e complet cu ajax
+                ?>
+            <hr />
+            <h4>Select User</h4>
+            <hr />    
+                <?php
                 $only_first  = true;
                 foreach ( $currentGameData['all-users'] as $item_id => $item )
                     if( in_array($item_id,$currentGameData['game-players']) ) { ?>
@@ -58,10 +70,14 @@
                            </span>
                       </label>
                     </div>
+                
             <?php } ?>
+            <hr />
                 <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off" >
-                <input type="submit">
-        <?php } else { ?>
+            <hr />
+                <input class="ui-button ui-state-default ui-corner-all" text-align="center" type="submit">
+            <hr />
+            <?php } else { ?>
         <script type="text/javascript">
             updateAjaxSpace();
         </script>
@@ -73,19 +89,21 @@
     if( $currentGameData['game-status']['status'] != "completed"
         && !empty($currentGameData['game-data']) ) { ?>
         <h3>Push Data</h3>
-        <h4>Enter Throw score</h4>
+        <h3>Enter Throw score</h3>
         <input id="i0" type="text" name="game_data[value]" value="" autocomplete="off" />
         <hr />
         <input class="ui-button ui-state-default ui-corner-all" type="submit" value="Arunca" onclick="
                     updateAjaxSpace({
+                        // input#i0 = introdu val , match= round , $#x22 = '' '' 
                         'game_data[value]' : $('input#i0').val(),
                         'game_data[player]': $('input[name=&#x22;game_data[player]&#x22;][match]').val()
                     });" />
         <hr />
-        <li class="ui-button ui-widget ui-state-default ui-corner-all" title="icon back">
-           <a class="ui-icon ui-icon-circle-arrow-w" href="<?php echo base_url(); ?>games/newgame"> NewGames </a>
-           
-        </li>
+        <div id="header">
+        <div class="nav">
+            <a class="but-nav" href="<?php echo base_url(); ?>games/newgame">New-Game</a>
+        </div>
+        </div>
         
   <?php }
 

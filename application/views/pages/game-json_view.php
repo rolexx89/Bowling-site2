@@ -104,8 +104,8 @@ if(isset($currentGameData['game-status'])) {
 
     if($currentGameData['game-status']['status'] != "completed") { ?>
         <form action="" charset="utf-8" method="post" style="border: 1px solid #c0c0c0; padding: 10px; margin: 10px;">
-            <h4>Select User</h4>
-        <?php
+          <h4>Select User</h4>
+         <?php
            
         if( $userNext === false )
         foreach ( $currentGameData['all-users'] as $item_id => $item )
