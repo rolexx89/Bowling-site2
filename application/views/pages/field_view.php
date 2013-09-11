@@ -1,11 +1,8 @@
 <div id="wrapper">
     <div id="content">
-
-<hr />
     <span>
-        <center> <h3> New User </h3></center>
+       New User 
     </span>
-<hr />
         <form action="<?php echo base_url(); ?>users/field" method="post">
             <div class="field-set">
                 <div class="field-row">
@@ -53,10 +50,6 @@
                      
                 
                 </div>
-                &nbsp;
-                 <hr />
-                     &nbsp;
-                 <hr />
             </div>
         </form>
     </div>

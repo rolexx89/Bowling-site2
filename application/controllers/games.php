@@ -36,7 +36,7 @@ class Games extends CI_Controller {
         
         $data['page_links'] = $this->pagination->create_links();
         
-        $this->display_lib->usersPage($data, 'pages/game_list');
+        $this->display_lib->usersPage($data, $start_list === 'quick-search' ? 'pages/game_search' : 'pages/game_list');
     }
     
 
@@ -44,13 +44,23 @@ class Games extends CI_Controller {
      * si se preia id-ul noului joc, dupa ce se face readresarea spre
      * vizualizarea jocului nou creat       games/show/<game-id>
      */
-    public function newGame() {
+    public function newGame($mode = false) {
         
         $reset_back = false;
         $allow_data = true;
         $loading_list   = false;
         $userList   = array();
-        
+        $request_partial    = false;
+        if($mode == 'select') {
+            $this->session->userdata['gameUserList_tmp']    = array();
+            $this->session->sess_write();
+        } else {
+            $request_partial    = !empty($mode);
+        }
+        if(isset($_POST['game_data']['game-name'])) {
+            $this->session->userdata['gameUserList_tmp_GameName']    = $_POST['game_data']['game-name'];
+            $this->session->sess_write();
+        }
         if(is_array(@$_POST['game_data']['player'])) {
             $loading_list   = true;
             $this->session->userdata['gameUserList_tmp']    = $_POST['game_data']['player'];
@@ -81,13 +91,16 @@ class Games extends CI_Controller {
                     if($this->currentGameData['game']->pushData($data['value'],$data['player'],$userList) === true) {
                               $i = $this->currentGameData['game']->getGameId();
                               $this->session->userdata['gameUserList_'.$i]  = $userList;
+                              if(!empty($this->session->userdata['gameUserList_tmp_GameName']))
+                                $this->gamesModel->updGameInfo($i,array(
+                                    'name' => $this->session->userdata['gameUserList_tmp_GameName']
+                                ));
                               $this->session->userdata['gameUserList_tmp']  = array();
+                              $this->session->userdata['gameUserList_tmp_GameName']  = "";
                               $this->session->sess_write();
-                              redirect('games/show/'.abs($i));
+                              redirect('games/show/'.abs($i)."/1");
                     }
-            } else {
-                
-            }
+            } 
         }
         
         $this->currentGameData['all-users'] = $this->usersModel->GetAllUsers();
@@ -100,10 +113,15 @@ class Games extends CI_Controller {
         $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
         $this->currentGameData['game-players']  = $userList;
         
-        
-        $this->display_lib->usersPage(array(
-            'currentGameData'   => $this->currentGameData
-        ), 'pages/game');
+        if(empty($request_partial)) {
+            $this->display_lib->usersPage(array(
+                'currentGameData'   => $this->currentGameData
+            ), 'pages/game');
+        } else {
+            $this->display_lib->usersPage(array(
+                'currentGameData'   => $this->currentGameData
+            ), 'pages/game-json', true);
+        }
     }
     
     /**
@@ -140,7 +158,19 @@ class Games extends CI_Controller {
         $this->bowllingGame_instance->setGameId($game_id);
      
         $this->currentGameData['game']          = $this->bowllingGame_instance;
-       
+        $this->currentGameData['gameInfo']      = $this->gamesModel->selectInfoArr(array('game_id' => $game_id));
+        if(count($this->currentGameData['gameInfo'])) {
+            $this->currentGameData['gameInfo']  = $this->currentGameData['gameInfo'][0];
+        } else {
+            $this->currentGameData['gameInfo']  = array(
+                'game_id'   => $game_id,
+                'users'     => '',
+                'name'      => '...',
+                'round'     => '',
+                'ctime'     => '',
+                'mtime'     => ''
+            );
+        }
         $this->currentGameData['game-data'] = $this->currentGameData['game']->getData();
        
         $this->currentGameData['game-status']   = $this->currentGameData['game']->pushData();
@@ -178,31 +208,83 @@ class Games extends CI_Controller {
      */
    
     public function actionSuffix(&$dataPosted) {
-           if( isset($dataPosted['currentGameData']['game-data'])
-                &&
-            is_array($dataPosted['currentGameData']['game-data'])
-          ) {
-            $d  = array(
-                    'users' => array()
-                       );
-            foreach ( $dataPosted['currentGameData']['game-data'] as $r ) {
-                if(!isset($d['users'][$r['user_id']]))
-                    $d['users'][$r['user_id']]    = array(
-                            'user_data' => $dataPosted['currentGameData']['all-users'][$r['user_id']],
-                            'rounds'    => array(),
-                            'total'     => 0
+        if( isset($dataPosted['currentGameData']['game-data'])
+             &&
+         is_array($dataPosted['currentGameData']['game-data'])
+         ) {
+             $d  = array(
+                     'users' => array()
                         );
-                $vTemp  = &$d['users'][$r['user_id']]['rounds'];
-                if(!isset($vTemp[$r['round']]))
-                    $vTemp[$r['round']]   = array();
+             foreach ( $dataPosted['currentGameData']['game-data'] as $r ) {
+                 if(!isset($d['users'][$r['user_id']]))
+                     $d['users'][$r['user_id']]    = array(
+                             'user_data' => $dataPosted['currentGameData']['all-users'][$r['user_id']],
+                             'rounds'    => array(),
+                             'total'     => 0
+                         );
+                 $vTemp  = &$d['users'][$r['user_id']]['rounds'];
+                 if(!isset($vTemp[$r['round']]))
+                     $vTemp[$r['round']]   = array();
 
-                $vTemp[$r['round']][] = $r;
-                $d['users'][$r['user_id']]['total']   += $r['value'];
-            }
-            $dataPosted['currentGameData']['game-data-grouped'] = $d;
-        }
+                 $vTemp[$r['round']][] = $r;
+                 $d['users'][$r['user_id']]['total']   += $r['value'];
+             }
+             $dataPosted['currentGameData']['countJoinedUsers']    = count($d['users']);
+             if( isset($dataPosted['currentGameData']['game-players'])
+                 && is_array($dataPosted['currentGameData']['game-players']) )
+             foreach( $dataPosted['currentGameData']['game-players'] as $userId )
+             if( !isset($d['users'][$userId]) ) {
+                 $d['users'][$userId]    = array(
+                             'user_data' => $dataPosted['currentGameData']['all-users'][$userId],
+                             'rounds'    => array(),
+                             'total'     => 0
+                         );
+             }
+             $dataPosted['currentGameData']['game-data-grouped'] = $d;
+         } else {
+             $d  = array(
+                     'users' => array()
+                        );
+             $dataPosted['currentGameData']['countJoinedUsers']    = 0;
+             if( isset($dataPosted['currentGameData']['game-players'])
+                 && is_array($dataPosted['currentGameData']['game-players']) )
+             foreach( $dataPosted['currentGameData']['game-players'] as $userId ) {
+                 $d['users'][$userId]    = array(
+                             'user_data' => $dataPosted['currentGameData']['all-users'][$userId],
+                             'rounds'    => array(),
+                             'total'     => 0
+                         );
+             }
+             
+             $dataPosted['currentGameData']['game-data-grouped'] = $d;
+         }
     }
 
+    
+    public function filtereddata() {
+        header("Content-type: text/plain; charset=utf-8",true);
+        // var_dump($_POST);
+        if( !isset($_POST["selectKey"]) || !isset($_POST["listFilter"]) || !isset($_POST["valCurr"]) ) {
+            echo "false";
+        } else {
+            $list = $this->gamesModel->selectInfoArr(
+                                           $_POST["listFilter"]
+                                       );
+            $data   = array();
+            foreach( $list as $item )
+                $data[] = $item[$_POST["selectKey"]];
+            echo json_encode(
+                    array(
+                        "arr"          => $data,
+                        "list"         => $list,
+                        "filter"       => $_POST["listFilter"],
+                        "valCurr"      => $_POST["valCurr"],
+                        "selectKey"    => $_POST["selectKey"]
+                    )
+                );
+        }
+        exit;
+    }
 
 
 

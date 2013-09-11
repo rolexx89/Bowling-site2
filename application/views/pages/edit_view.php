@@ -2,11 +2,9 @@
     <div id="content">
         <form action="<?php echo base_url(); ?>/users/edit/<?php echo htmlspecialchars($main_info['id']); ?>/" method="post" charset="utf-8">
             <div class="field-set">
-                <hr />
                 <span>
-                    <center> <h3> Edit user date </h3></center>
+                    Edit user date
                 </span>
-                <hr />
                 <div class="field-row">
                     <span class="field-name">
                         Name:
@@ -42,9 +40,6 @@
                 
                 </div>
             </div>
-            <hr />
-            &nbsp;
-            <hr />
         </form>
     </div>
 </div>

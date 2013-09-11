@@ -8,7 +8,9 @@
 
 <title>Bowling</title>
 <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
-<script src="/scripts/jquery-1.8.2.min.js"></script>
+<link href="/scripts/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+<script src="/scripts/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js"></script>
+<script src="/scripts/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 </head>
 <body>
 
@@ -32,6 +34,7 @@
                         <a class="but-nav" href="<?php echo base_url(); ?>users/all">Users</a>
                         <a class="but-nav" href="<?php echo base_url(); ?>games/newgame">New-Game</a>
                         <a class="but-nav" href="<?php echo base_url(); ?>games/lists/">List-Games</a>
+                        <a class="but-nav" href="<?php echo base_url(); ?>games/lists/quick-search">Search Games</a>
                   </div>
                 </div>
                 <div id="body">

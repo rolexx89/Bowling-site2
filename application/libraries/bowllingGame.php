@@ -21,6 +21,7 @@ class BowllingGame {
  * @abs e pus daca utilizatorul in url scrie nu int dar '24r' 
  * atunci fortsam sa fie int si sa afisheze id cu joc 24
  */
+  
     public  function setGameId($game_id) {
         if($game_id === true) {
             $this->game_id  = $this->gamesModel->getNewGameId();
@@ -234,6 +235,15 @@ class BowllingGame {
                                 'value'     => abs($val)
                             )
                         );
+                        $users_data = array();
+                        if(!empty($usersInGame))
+                        foreach( $usersInGame as $user_id ) 
+                            $users_data[$user_id]   = $this->usersModel->get($user_id);
+                        $status = $this->pushData();
+                        $this->gamesModel->updGameInfo( $this->game_id, array(
+                            'round' => ( $status['status'] == "completed" ? 100 : $currentRound ),
+                            'users' => json_encode($users_data)
+                        ) );
                         return true;
                     }
     }

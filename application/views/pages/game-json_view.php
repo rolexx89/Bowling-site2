@@ -4,7 +4,6 @@
 ob_start();
 // controlam ca datele jocului au fost primite in view
 if(isset($currentGameData['game-status'])) {
-
     if($currentGameData['game-status']['status'] == "completed" ) { ?>
         Game Status: completed
     <?php } else { ?>
@@ -13,16 +12,12 @@ if(isset($currentGameData['game-status'])) {
         Round: <?php echo htmlspecialchars($currentGameData['game-status']['round']); ?>
     <?php }
        
-        
-    $userNext   = false;
     if($currentGameData['game-data']) { ?>
-        <hr />
-        <hr />
-        <h3>Game Table</h3>
-        <?php
-        if(!empty($currentGameData['game-data'])) {
-            ?>
-        <center>
+        <input type="hidden" class="new-url-replace" value="/games/show/<?=$currentGameData['game']->getGameId(); ?>" />
+    <?php }
+    $userNext   = false;
+    if($currentGameData['game-data-grouped']['users']) { ?>
+        <h3>Game Table - <?php echo htmlspecialchars($currentGameData['gameInfo']['name']); ?></h3>
             <table class="list">
                 <tr class="mark">
                     <td>Game #<?=$currentGameData['game']->getGameId(); ?></td>
@@ -80,7 +75,7 @@ if(isset($currentGameData['game-status'])) {
                                         &&
                                     ( $currentGameData['game-status']['allowed-new'] == false
                                         ||
-                                      count($currentGameData['game-data-grouped']['users']) == count($currentGameData['game-players'])
+                                      $currentGameData['countJoinedUsers'] == count($currentGameData['game-players'])
                                     )
                                   )
                                     $userNext   = $user_id;
@@ -96,10 +91,7 @@ if(isset($currentGameData['game-status'])) {
             }
             ?>
             </table>
-            </center>
             <?php
-        }
-
     }
 
     if($currentGameData['game-status']['status'] != "completed") { ?>
@@ -109,7 +101,7 @@ if(isset($currentGameData['game-status'])) {
            
         if( $userNext === false )
         foreach ( $currentGameData['all-users'] as $item_id => $item )
-            if( !isset($currentGameData['game-data-grouped']['users'][$item_id]) 
+            if( empty($currentGameData['game-data-grouped']['users'][$item_id]['rounds']) 
                  &&
                 in_array($item_id,$currentGameData['game-players'])
             ) $userNext = $item_id;
@@ -117,7 +109,7 @@ if(isset($currentGameData['game-status'])) {
                    
         // afisam utilizatorii ce deja joaca
         foreach ( $currentGameData['all-users'] as $item_id => $item )
-            if( isset($currentGameData['game-data-grouped']['users'][$item_id]) 
+            if( !empty($currentGameData['game-data-grouped']['users'][$item_id]['rounds']) 
                  ||
                 in_array($item_id,$currentGameData['game-players'])
             ) {

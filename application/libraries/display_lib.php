@@ -4,9 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Display_Lib {
-    
-    function __construct() {
-    }
+
 /**
  * legatura intre controler si page view
  * @param array $data  continutului pageni

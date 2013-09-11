@@ -1,8 +1,6 @@
-<hr />
     <span>
-        <center> <h3> Lists Game-Play </h3></center>
+        Lists Game-Play 
     </span>
-<hr />
 <?php foreach ($games_list as $games_data) { ?>
     <div class="field-set">
         <div class="field-row">
@@ -19,13 +17,10 @@
 <?php } ?>
 <div class="pages">
     <?php echo $page_links; ?>
-</div>
-
-<hr />                   
+</div>                  
 <div id="header">
     <div class="nav">
         <a class="but-nav" href="<?php echo base_url(); ?>games/newgame">New-Game</a>
     </div>
 </div>
-<hr />
   

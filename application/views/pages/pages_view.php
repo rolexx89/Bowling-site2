@@ -1,19 +1,8 @@
-<div id="splash-layer" style="position:fixed;top:0;left:0;height:100%;width:100%;z-index: 100;background:#efefef;">
-    <div style="position: absolute;top: 20%;left:0;height: 60%;width:100%;text-align: center;">
-        <img src="/stylesheets/images/loading.jpg" style="height: 100%;width: auto;" />
-    </div>
-</div>
-<script type="text/javascript">
-    $('#splash-layer').fadeOut('slow');
-</script>
-<hr />
-<center>
+
 <span class="field-name">
             Actions:
         </span>
-        <hr />
-<h2>Users List</h2> 
-<hr />
+Users List
 <table  class="list">
     <tr class="mark">
             <td><b>N</b></td>
@@ -38,10 +27,10 @@
                 <td><?php echo htmlspecialchars($item['nick']); ?></td>
                 <td><?php echo htmlspecialchars($item['surname']); ?></td>
                 <td align="center">
-                    <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-trash">
+                    <li class="ui-button ui-widget ui-state-default ui-corner-all">
                         <a class="ui-icon ui-icon-trash" onclick="if(!confirm('Sure, you want to delete this user?')) return false; return true;" href="<?php echo base_url(); ?>users/userremove/<?php echo htmlspecialchars($item['id']); ?>">del</a>
                     </li>
-                    <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-pencil">
+                    <li class="ui-button ui-widget ui-state-default ui-corner-all">
                         <a class="ui-icon ui-icon-pencil" href="<?php echo base_url(); ?>users/edit/<?php echo htmlspecialchars($item['id']); ?>"> Edit </a>
                     </li>
                 </td>
@@ -49,8 +38,6 @@
             <?php }
     ?>
 </table>
-</center>
-<hr />
 <div id="header">
 <div class="nav"> 
     
@@ -63,5 +50,3 @@
     </table>
     </div>
 </div> 
-
-<hr />
