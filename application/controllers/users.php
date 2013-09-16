@@ -10,26 +10,17 @@ class Users extends CI_Controller {
         $this->load->model('UsersModel');
         $this->load->library('captcha_lib');
     }
- 
-    
-/**
- * modelu allUsers si inscrie dtele $data['allUsers']
- * si apoi trece la view
- */
+
     public function allUsers() {
         $data['allUsers'] = $this->UsersModel->GetAllUsers();
 
-        $name = 'pages/pages';
+        $name = 'pages/allUsers';
 
         $this->display_lib->usersPage($data, $name);
-       
     }
-/**
- * functia  field introducerea datelor utilizatorului in bd 
- * si controlului cu ajutorul captcha
- */
+
     public function field() {
-        
+
         if (!isset($_POST['send_message'])) {
             $data['imgcode'] = $this->captcha_lib->captcha_actions();
             $data['info'] = '';
@@ -56,7 +47,6 @@ class Users extends CI_Controller {
                     $nick = $this->input->post('nick');
 
                     $this->display_lib->usersPage(array('info' => 'Succes'), 'info');
-                    // $this->input->post('users');
                     $this->UsersModel->addNew(array(
                         'name' => $name,
                         'surname' => $surname,
@@ -77,15 +67,10 @@ class Users extends CI_Controller {
             }
         }
     }
-/**
- * 
- * @param int $id dupa id gaseshte utilizatorul
- * si afiseaza datele lui, 
- * if nui asa id mesajul  $data['info']= pagina nu exista
- */
+
     public function show($id) {
         $data = array();
-        $data ['main_info'] = $this->UsersModel->get($id); 
+        $data ['main_info'] = $this->UsersModel->get($id);
 
         if ($id) {
 
@@ -95,22 +80,24 @@ class Users extends CI_Controller {
 
                 $this->display_lib->userInfoPage($data, $name);
             } else {
-                $name = 'pages/page';
+                $name = 'pages/user';
 
                 $this->display_lib->usersPage($data, $name);
             }
-         }
-     }
-/**
- * @param int $user_id va sterge tot utilizatoul dupa id
- */
+        }
+    }
+
+    /**
+     * @param int $user_id delete user for id
+     */
     public function userRemove($user_id) {
         $this->UsersModel->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
-/**
- * @param int $id va edita utilizator dupa id 
- */
+
+    /**
+     * @param int $id  edit users for id 
+     */
     public function edit($id) {
         $data['main_info'] = $this->UsersModel->get($id);
 
@@ -124,11 +111,10 @@ class Users extends CI_Controller {
                     'nick' => $this->input->post('nick')
                 ));
                 redirect('/users/all', 'localtion', 302);
-            } 
+            }
         }
-        
+
         $this->display_lib->usersPage($data, 'pages/edit');
-        
     }
 
 }

@@ -5,30 +5,31 @@ if (!defined('BASEPATH'))
 
 class Display_Lib {
 
-/**
- * legatura intre controler si page view
- * @param array $data  continutului pageni
- * @param $name denumirea view
- */
+    /**
+     * connection between controller and view page
+     * @param array $data  content on page
+     * @param $name name view
+     */
     public function usersPage($data, $name, $only_content = false) {
         $CI = &get_instance();
-        
-        if(!$only_content)
+
+        if (!$only_content)
             $CI->load->view('header', $data);
-     
-        if(method_exists($CI, 'actionSuffix'))
+
+        if (method_exists($CI, 'actionSuffix'))
             $CI->actionSuffix($data);
         $CI->load->view($name . '_view', $data);
-        if(!$only_content)
+        if (!$only_content)
             $CI->load->view('footer', $data);
     }
-/**
- * @param array $data continutul de pe pagina
- * @param  $name denumirea view rederectioneaza paginea de eroare 
- */
+
+    /**
+     * @param array $data content on page
+     * @param  $name name view for error 
+     */
     public function userInfoPage($data, $name) {
         $CI = &get_instance();
-        if(method_exists($CI, 'actionSuffix'))
+        if (method_exists($CI, 'actionSuffix'))
             $CI->actionSuffix($data);
         $CI->load->view($name . '_view', $data);
     }

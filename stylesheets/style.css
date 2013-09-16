@@ -1,8 +1,10 @@
 
 html,body{margin:0;padding:0}
-body{font: 76% arial,sans-serif;font-size   : 11px;text-align:center;}
+body{font: 77% arial,sans-serif;font-size   : 11px;text-align:center; color:#1F3499}
 p{margin:0 10px 10px}
 a{color: #981793;}
+span#header {height:120px;line-height:120px;margin:1px;
+             padding-left:300px;background: #EEE;color: #79B30B}
 div#header h1{height:120px;line-height:120px;margin:1px;
               padding-left:300px;background: #EEE;color: #79B30B }
 #header .nav a {
@@ -14,13 +16,13 @@ div#header h1{height:120px;line-height:120px;margin:1px;
     margin      : 2px 1px;
     text-decoration : none;
     border-radius   : 3px;
-    
+
     display     : inline-block;
 }
 
 #header .nav a:hover {
     color   : #232323;
-   
+
 }
 #conteiner .nav input {
     background  : #eee;
@@ -32,14 +34,32 @@ div#header h1{height:120px;line-height:120px;margin:1px;
     text-decoration : none;
     border-radius   : 3px;
     text-align:center;
-    
-    
+
+
 }
 
 #header .nav input:hover {
     color   : #232323;
-    
-    
+
+
+}
+.header{
+    background: url('/stylesheets/images/bowling.png') left center no-repeat #EEE;
+    height: 124px;
+    width: 1000px;
+    text-align: center;
+    font-size: 50px;
+    line-height: 124px;
+    color: #1B94C4;
+    opacity: 1;
+    filter: dropshadow(color=#030303, offx=0, offy=0);
+    -webkit-box-shadow:  0px 5px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow:  0px 5px 5px 0px rgba(0, 0, 0, 0.5);
+}
+nav{
+    margin: 6px 0px;
+    padding: 6px;
+    border: 1px dotted black;
 }
 div#i0 input{text-align:center}
 div#container{text-align:left}
@@ -57,22 +77,18 @@ div#leftblock{float:left;width:150px;margin-left:-700px}
 div#rightblock{float:left;width:150px;margin-left:-150px}
 div#footer{clear:left;width:100%}
 .field-set {
-    border-top	: 1px solid #efefef;
-    border-bottom	: 3px double #efefef;
+    border-top	: 1px solid;
 
     margin	: 10px 0;
 }
 
-.field-set:hover {
-    background	: #efefef;
-}
+
 
 .field-row {
     width	: 540px;
     margin	: 3px auto;
 
     border	: 1px solid #c0c0c0;
-    background	: #efefef;
 
     padding	: 3px 10px;
 
@@ -82,9 +98,7 @@ div#footer{clear:left;width:100%}
     text-align	: left;
 }
 
-.field-row:hover {
-    background	: #fefefe;
-}
+
 
 .field-row .field-name {
     display	: inline-block;
@@ -95,50 +109,50 @@ div#footer{clear:left;width:100%}
     font-weight	: bold;
     color	: #232323;
 }
-    * {
-        margin  : 0;
-        padding : 0;
-    }
-    #wall {
-        background  : #efefef;
-        min-height  : 100%;
-        width       : 100%;
-    }
+* {
+    margin  : 0;
+    padding : 0;
+}
+#wall {
+    background  : #efefef;
+    min-height  : 100%;
+    width       : 100%;
+}
 
-    #wall #container {
-        width   : 1000px;
-        /*height    : 100%;*/
-        margin  : 0 auto;
-        padding :5px;
-        background  : #fff;
-        
-    }
+#wall #container {
+    width   : 1000px;
+    /*height    : 100%;*/
+    margin  : 0 auto;
+    padding :5px;
+    background  : #fff;
 
-    html,body,body center.wall {
-        height  : 100%;
-    }
+}
 
-    div#body {
-        min-height  : 360px;
-        padding : 20px 10px;
-    }
+html,body,body center.wall {
+    height  : 100%;
+}
 
-    table.list {
-        min-width   : 540px;
-        font-size   : 11px;
-    }
-    table.list td {
-        margin  : 2px;
-        border  : 1px solid #efefef;
-        padding : 5px 10px;
-    }
-    table.list tr.mark td {
-        background  : #dedede;
-    }
+div#body {
+    min-height  : 360px;
+    padding : 20px 10px;
+}
 
-    
-    
-    
+table.list {
+    min-width   : 540px;
+    font-size   : 11px;
+}
+table.list td {
+    margin  : 2px;
+    border  : 1px solid #efefef;
+    padding : 5px 10px;
+}
+table.list tr.mark td {
+    background  : #dedede;
+}
+
+
+
+
 label.ui-state-default {
     min-height  : 0px;
     display     : block;
@@ -164,16 +178,16 @@ div.pages {
 div.pages a, div.pages strong {
     background  : #eee;
     color       : #232323;
-    
+
     font-size   : 11px;
     font-weight : bold;
-    
+
     display     : inline-block;
     padding     : 3px 6px;
     margin      : 3px 1px;
     border-radius   : 2px;
     text-decoration : none;
-    
+
     border      : 1px solid transparent;
 }
 
@@ -189,5 +203,58 @@ hr {
     border: 0 ;
     border-top: 1px dotted #AAA;
     margin: 4px 0;
-    
+
+}
+
+div.users 
+{
+    width: 60px;
+    display:block;
+    float: left;
+    text-decoration : none;
+    font-size: 11px;
+    line-height : 27px;
+    margin      : 2px 2px;
+    padding     : 0px 5px;
+    border: 1px solid #1A94C4;
+    text-align: center;
+    border-radius   : 3px;
+
+}
+div.i 
+{
+    display:inline-block;
+
+
+    height: 29px;
+}
+div.gamess 
+{
+
+
+    width: 60px;
+    display:block;
+    float: left;
+    padding     : 2px 2px;
+    margin      : 1px 1px;
+    border-radius   : 3px;
+    text-decoration : none;
+    text-align: center;
+    border      : 1px solid #1A94C4;
+}
+div.g 
+{
+    display:inline-block;
+
+    height: 23px;
+}
+
+
+div.content-left {
+    margin  : 10px auto;
+    max-width   : 540px;
+    text-align: left;   
+}
+div.content-left .ui-button {
+    text-align: left;
 }

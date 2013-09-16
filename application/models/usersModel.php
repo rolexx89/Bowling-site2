@@ -6,14 +6,14 @@ if (!defined('BASEPATH'))
 class usersModel extends CI_Model {
 
     /**
-     * @var $table numele tabelului
-     * @var $idkey id  tabelului
+     * @var $table name table
+     * @var $idkey id  tabel
      */
     private $table = 'users';
     public $idkey = 'id';
 
     /**
-     * @var array $fieldRulers validarea dateleor utilizatorului
+     * @var array $fieldRulers validation of user data
      */
     public $fieldRules = array(
         array(
@@ -39,7 +39,7 @@ class usersModel extends CI_Model {
     );
 
     /**
-     * @var array $contactEditRules validarea datelor la editare
+     * @var array $contactEditRules validation of user data for edit
      */
     public $contactEditRules = array(
         array(
@@ -60,7 +60,7 @@ class usersModel extends CI_Model {
     );
 
     /**
-     * @param array $users_data introducerea unui user nou in bd sql
+     * @param array $users_data write new user in bd sql
      */
     public function addNew($users_data) {
 
@@ -68,8 +68,8 @@ class usersModel extends CI_Model {
     }
 
     /**
-     * stergearea unui utilizator dupa id
-     * @param integer $id stergearea utilizator dupa id
+     * 
+     * @param integer $id delete user by id
      */
     function delete($id) {
         $this->db->where('id', $id);
@@ -77,7 +77,7 @@ class usersModel extends CI_Model {
     }
 
     /**
-     * etidatrea utilizatorului dupa id si editarea utilizatorului
+     * edit user by id
      * @param type $id integer
      * @param type $data string
      */
@@ -87,7 +87,7 @@ class usersModel extends CI_Model {
     }
 
     /**
-     * preluarea toti utilizatori dupa idKey
+     * After taking all users idKey
      * @param int $obj_id 
      * @return row_array
      */
@@ -98,13 +98,13 @@ class usersModel extends CI_Model {
     }
 
     /**
-     * @return $list preiea toti utilizatori din bd dupa id si preaiea utilizatori
+     * @return $list 
      */
     public function GetAllUsers() {
 
         $this->db->order_by('id', 'desc');
         $query = $this->db->get($this->table);
-        $data = $query->result_array(); 
+        $data = $query->result_array();
         $list = array();
         foreach ($data as $user)
             $list[$user['id']] = $user;
@@ -112,8 +112,7 @@ class usersModel extends CI_Model {
     }
 
     /**
-     * @param int $user_id verifica daca utilizatori daca nare valoare negativa 
-     * si daca exista in bd
+     * @param int $user_id check if the user does not have negative value and if in bd
      * @return integer
      */
     public function checkUserById($user_id) {

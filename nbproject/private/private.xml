@@ -5,7 +5,7 @@
             <url>application/views/header.php</url>
             <bookmark id="2">
                 <name/>
-                <line>27</line>
+                <line>22</line>
                 <key/>
             </bookmark>
         </file>
@@ -13,7 +13,7 @@
             <url>application/views/pages/game_view.php</url>
             <bookmark id="1">
                 <name/>
-                <line>26</line>
+                <line>0</line>
                 <key/>
             </bookmark>
         </file>

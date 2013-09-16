@@ -255,7 +255,9 @@ button.ui-button-icons-only {
 input.ui-button {
 	padding: .4em 1em;
 }
-
+a.ui-button{
+    padding: .4em 1em;
+}
 /* button icon element(s) */
 .ui-button-icon-only .ui-icon,
 .ui-button-text-icon-primary .ui-icon,

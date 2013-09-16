@@ -1,8 +1,8 @@
 <div id="wrapper">
     <div id="content">
-    <span>
-       New User 
-    </span>
+        <span>
+            New User 
+        </span>
         <form action="<?php echo base_url(); ?>users/field" method="post">
             <div class="field-set">
                 <div class="field-row">
@@ -43,12 +43,12 @@
                 </div>
                 <div class="field-row">
                     <input class="ui-button ui-state-default ui-corner-all" type="submit" name="send_message" value="inregistrare">
-                    
+
                     <li class="ui-button ui-widget ui-state-default ui-corner-all" title=".ui-icon-home">
-                    <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
+                        <a class="ui-icon ui-icon-home" href="<?php echo base_url(); ?>users/all"> Cancel </a>
                     </li>
-                     
-                
+
+
                 </div>
             </div>
         </form>
