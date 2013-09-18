@@ -14,6 +14,9 @@ Users List
     <div class="users"> actions </div>
     </div>
 </div>
+<div id="dialog-confirm" title="Removing User?" style="display: none;">
+    <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>These item will be permanently deleted and cannot be recovered.<br /><br />This wil remove all games, where played this user<br /><br />Are you sure?</p>
+</div>
        <?php
         $user_count = 0;
         foreach ($allUsers as $item) { ?>
@@ -31,7 +34,22 @@ Users List
                         <div class="users"><?php echo htmlspecialchars($item['nick']); ?></div> 
                         <div class="users"><?php echo htmlspecialchars($item['surname']); ?></div> 
                         <div class="users"><li class="ui-button ui-widget ui-state-default ui-corner-all">
-                                <a class="ui-icon ui-icon-trash" onclick="if(!confirm('Sure, you want to delete this user?')) return false; return true;" href="<?php echo base_url(); ?>users/userremove/<?php echo htmlspecialchars($item['id']); ?>">del</a>
+                                <span class="ui-icon ui-icon-trash" onclick="
+                                    $( '#dialog-confirm' ).dialog({
+                                        resizable: false,
+                                        height:220,
+                                        modal: true,
+                                        buttons: {
+                                            'Delete user': function() {
+                                                document.location.href = '<?php echo base_url(); ?>users/userremove/<?php echo htmlspecialchars($item['id']); ?>';
+                                                $( this ).dialog( 'close' );
+                                            },
+                                            Cancel: function() {
+                                                $( this ).dialog( 'close' );
+                                            }
+                                        }
+                                    });
+                                   ">del</span>
                            </li>
                            <li class="ui-button ui-widget ui-state-default ui-corner-all">
                                 <a class="ui-icon ui-icon-pencil" href="<?php echo base_url(); ?>users/edit/<?php echo htmlspecialchars($item['id']); ?>"> Edit </a>

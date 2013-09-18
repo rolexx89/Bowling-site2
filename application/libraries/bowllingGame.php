@@ -13,10 +13,6 @@ class BowllingGame {
     public $gamesModel = false;
     public $usersModel = false;
 
-    function __construct() {
-        
-    }
-
     public function setGameId($game_id) {
         if ($game_id === true) {
             $this->game_id = $this->gamesModel->getNewGameId();
@@ -54,11 +50,12 @@ class BowllingGame {
      */
     function completedCheck($data, $currentRound, &$players, $usersInGame) {
         $players_all = array();
-        foreach ($data as $row) {
+        foreach ($data as $row)
             $players_all[$row['user_id']] = true;
-        }
+
         foreach ($usersInGame as $i)
             $players_all[$i] = true;
+        
         $players = array();
         $roundHaveData = false;
 

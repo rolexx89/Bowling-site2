@@ -7,6 +7,17 @@
         // "Joram, max created: 2345 id: 34 identify: max popovici"
         // into
         // { _ : "max", created: "2345", id: "34", identify: "max popovici" }
+        // [] definim caracterile
+        // [^..] definim caracterile ce sa fie diferite
+        // [^ spatii
+        // \S nu is spatii
+        // \w char de cuvinte
+        // \W invers la \W
+        // \d \D ca si \s doar cifre
+        // $ sfirsitul stringului
+        // ^ inceputul stringului
+        // * .. zero sau mai mult
+        // + .. unul sau mai mut
         var buildQuery = function(s) {
             var r = /^\s*([a-z]+)\:\s*(\S[^\:]*?|)\s*(\s[a-z]+\:.*|)$/i
             var o = {"_keys": []}, m, k, f = s.split(/([a-z]+)\:/i);
@@ -20,8 +31,7 @@
                 o[k = m[1].toLowerCase()] = m[2];
                 o["_keys"].push(k);
                 f = f.split(m[0]).join(m[3]);
-            }
-            ;
+            };
             return o;
         };
         // Update the jQuery UI - autocomplete element
