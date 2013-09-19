@@ -130,13 +130,12 @@ class BowllingGame {
             $data = array();
         // detect round
         $currentRound = 1;
-        if (count($data)) {
+        if (count($data))
             $currentRound = $data[count($data) - 1]['round'];
-        }
 
         $players_array = array();
         $round_justCompleted = false;
-        if ($this->completedCheck($data, $currentRound, $players_array, $usersInGame)) {
+        if ($this->completedCheck($data, $currentRound, $players_array, $usersInGame))
             if ($currentRound < 10) {
                 $currentRound += 1;
                 $round_justCompleted = true;
@@ -147,15 +146,8 @@ class BowllingGame {
                     'allowed-new' => false
                 );
             }
-        }
         // add new user
-        $allowed_newUser = (
-                $currentRound == 1 ||
-                (
-                $currentRound == 2 &&
-                $round_justCompleted
-                )
-                );
+        $allowed_newUser = ($currentRound == 1 || ( $currentRound == 2 && $round_justCompleted));
 
         // to take only the status of the game without the insert data
         if ($val === false && $player === false) {
@@ -167,24 +159,17 @@ class BowllingGame {
             );
         }
         // check round and value  
-
-        if (( $val > 10 && $currentRound < 10 ) || ( $currentRound == 10 && $val > 24 ))
+        if( (( $val > 10 && $currentRound < 10 ) || ( $currentRound == 10 && $val > 24 ))
+            || empty($player) // check if user was specified
+            || !$this->usersModel->checkUserById($player)) // check if user exist
             return false;
-        // check if user was specified
-        if (empty($player))
-            return false;
-        // check if user exist
-        if (!$this->usersModel->checkUserById($player))
-            return false;
-
 
         if ($this->checkF($data, 'user_id', $player) == 0) {
             // allow new player if round 1
-            if ($allowed_newUser && $currentRound == 2) {
+            if ($allowed_newUser && $currentRound == 2)
                 $currentRound = 1;
-            }
-            if ($currentRound > 1)
             // player can't be pushed because round already more than 1
+            if ($currentRound > 1)
                 return false;
         }
 
@@ -194,24 +179,17 @@ class BowllingGame {
 
         if (( $count_try == 0 && $val == 10 && $currentRound < 10 ) ||
                 ( $count_try < 3 && $val == 10 && $currentRound == 10 )
-        )
-            $val = 12;
+        )   $val = 12;
 
         if (( ( $sum == 0 && $val <= 12 ) || ( ( $currentRound < 10 && $sum > 0 && $sum + $val <= 10 ) || ( $currentRound == 10 && $sum + $val <= 24 && $count_try < 2 ) || ( $currentRound == 10 && $sum + $val <= 22 && $count_try >= 2 ) ) ) &&
-                (
-                ( $currentRound < 10 && $count_try < 2 ) ||
-                ( $currentRound == 10 && $count_try < 3 )
-                )
-        ) {
-            $this->gamesModel->putData(
-                    array(
+                (( $currentRound < 10 && $count_try < 2 ) || ( $currentRound == 10 && $count_try < 3 ))) {
+            $this->gamesModel->putData( array(
                         'game_id' => abs($this->game_id),
                         'round' => abs($currentRound),
                         'user_id' => abs($player),
                         'try_n' => abs($count_try + 1),
                         'value' => abs($val)
-                    )
-            );
+                    ));
             $users_data = array();
             // we have users ids in UsersInGame
             // and we need users Data in gameInfo Table
@@ -224,7 +202,7 @@ class BowllingGame {
             // insert status and users_arr in gameInfo MySQL Table
             $this->gamesModel->updGameInfo($this->game_id, array(
                 'round' => ( $status['status'] == "completed" ? 100 : $currentRound ),
-                'users' => json_encode($users_data)
+                'users' => $users_data
             ));
             return true;
         }

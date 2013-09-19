@@ -92,6 +92,10 @@ class Users extends CI_Controller {
      */
     public function userRemove($user_id) {
         $this->UsersModel->delete($user_id);
+        // remove games with links to this user
+        // TODO
+        // games model remove links
+        // TODO
         redirect('users/all', 'localtion', 302);
     }
 

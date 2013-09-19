@@ -10,7 +10,8 @@ class gamesModel extends CI_Model {
      * @var $idkey id game
      */
     public $table = 'bowling-game';
-    public $tableInfo = 'bowling-game-info';
+    public $tableInfo   = 'bowling-game-info';
+    public $tableLinks  = 'game-user';
     public $idkey = 'game_id';
 
     public function gamesModel() {
@@ -99,6 +100,15 @@ class gamesModel extends CI_Model {
             $data['ctime'] = @date("YmdHis");
             $data['mtime'] = $data['ctime'];
             $data['game_id'] = $game_id;
+            if (isset($data['users'])) {
+                foreach($data['users'] as $user_id => $user_data) {
+                    $this->db->insert($this->tableLinks, array(
+                        'game'  => $game_id,
+                        'user'  => $user_id
+                    ));
+                }
+                $data['users'] = '';
+            }
             $this->db->insert($this->tableInfo, $data);
         }
     }
@@ -121,12 +131,36 @@ class gamesModel extends CI_Model {
             $this->db->like('round', $filter['round'], 'right');
         if (isset($filter["name"]))
             $this->db->like('name', $filter['name'], 'both');
-        if (isset($filter["users"]))
-            $this->db->like('users', $filter['users'], 'both');
+        // TODO user links table
+        // if (isset($filter["users"]))
+        //     $this->db->like('users', $filter['users'], 'both');
         $this->db->limit(10);
         $query = $this->db->get($this->tableInfo);
         return $query->result_array();
     }
+    
+    public function selectInfoArrBySearch($text) {
+        $carr   = array();
+        $values = preg_split('/[\s\.\,\;\:]+/',$text);
+        foreach($values as $value)
+            if(!empty($value))
+                $carr[] = " ( `bowling-game-info`.`game` LIKE 0x".bin2hex('%'.$value.'%')."
+                            OR `users`.`name` LIKE 0x".bin2hex('%'.$value.'%')."
+                            OR `users`.`surname` LIKE 0x".bin2hex('%'.$value.'%')."
+                          ) ";
+        
+        $q = $this->db->query("SELECT
+            `bowling-game-info`.`game_id`   as `game-id`,
+            `bowling-game-info`.`name`      as `game-name`,
+            `users`.`name`      as `user-name`,
+            `users`.`surname`      as `user-surname`
+	FROM `game-user`
+	left join `bowling-game-info` on ( `bowling-game-info`.`game_id` = `game-user`.`game` )
+	left join `users` on ( `users`.`id` = `game-user`.`user` )
+WHERE ( ".(count($carr) ? implode(' OR ',$carr) : " 1 ")." ) LIMIT 20");
+        return $q->result_array();
+    }
+    
 
 }
 

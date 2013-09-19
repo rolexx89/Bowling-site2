@@ -26,6 +26,7 @@
                             <a class="ui-button ui-state-default ui-corner-all" href="<?php echo base_url(); ?>games/newgame/select">New-Game</a>
                             <a class="ui-button ui-state-default ui-corner-all" href="<?php echo base_url(); ?>games/lists/">List-Games</a>
                             <a class="ui-button ui-state-default ui-corner-all" href="<?php echo base_url(); ?>games/lists/quick-search">Search Games</a>
+                            <a class="ui-button ui-state-default ui-corner-all" href="<?php echo base_url(); ?>games/lists/simple-search">Simple Search Games</a>
                         </nav>
                     </div>
                     <div id="body">

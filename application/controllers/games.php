@@ -32,8 +32,16 @@ class Games extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data['page_links'] = $this->pagination->create_links();
-
-        $this->display_lib->usersPage($data, $start_list === 'quick-search' ? 'pages/game_search' : 'pages/game_list');
+        
+        $viewPage   = 'pages/game_list';
+        $types_view = array(
+            'quick-search'  => 'pages/game_search',
+            'simple-search' => 'pages/game_search_simple'
+        );
+        if( isset($types_view[$start_list]) )
+            $viewPage   = $types_view[$start_list];
+        
+        $this->display_lib->usersPage($data, $viewPage );
     }
 
     /**
@@ -266,6 +274,29 @@ class Games extends CI_Controller {
                         "filter" => $_POST["listFilter"],
                         "valCurr" => $_POST["valCurr"],
                         "selectKey" => $_POST["selectKey"]
+                    )
+            );
+        }
+        exit;
+    }
+
+    public function filteredDataSimple() {
+        header("Content-type: text/plain; charset=utf-8", true);
+        // var_dump($_POST);
+        if (!isset($_POST["valCurr"])) {
+            echo "false";
+        } else {
+            $list = $this->gamesModel->selectInfoArrBySearch(
+                    $_POST["valCurr"]
+            );
+            $data = array();
+            foreach ($list as $item)
+                $data[] = $item['game-name'].', '.$item['user-name'].' '.$item['user-surname'];
+            echo json_encode(
+                    array(
+                        "arr" => $data,
+                        "list" => $list,
+                        "valCurr" => $_POST["valCurr"]
                     )
             );
         }
