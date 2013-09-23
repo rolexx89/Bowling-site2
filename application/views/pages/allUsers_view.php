@@ -33,8 +33,14 @@ Users List
                         <div class="users"><?=htmlspecialchars($item['name']);?></div> 
                         <div class="users"><?php echo htmlspecialchars($item['nick']); ?></div> 
                         <div class="users"><?php echo htmlspecialchars($item['surname']); ?></div> 
-                        <div class="users"><li class="ui-button ui-widget ui-state-default ui-corner-all">
-                                <span class="ui-icon ui-icon-trash" onclick="
+                        <div class="users">
+                           
+                           <li class="ui-button ui-widget ui-state-default ui-corner-all">
+                                <a class="ui-icon ui-icon-pencil" href="<?php echo base_url(); ?>users/edit/<?php echo htmlspecialchars($item['id']); ?>"> Edit </a>
+                           </li>
+                           <li class="ui-button ui-widget ui-state-default ui-corner-all">
+                                
+                           <span class="ui-icon ui-icon-trash" onclick="
                                     $( '#dialog-confirm' ).dialog({
                                         resizable: false,
                                         height:220,
@@ -50,10 +56,7 @@ Users List
                                         }
                                     });
                                    ">del</span>
-                           </li>
-                           <li class="ui-button ui-widget ui-state-default ui-corner-all">
-                                <a class="ui-icon ui-icon-pencil" href="<?php echo base_url(); ?>users/edit/<?php echo htmlspecialchars($item['id']); ?>"> Edit </a>
-                           </li>
+                               </li>
                         </div>
            </div>
 </div>

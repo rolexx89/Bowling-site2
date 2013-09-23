@@ -144,11 +144,9 @@ class gamesModel extends CI_Model {
         $values = preg_split('/[\s\.\,\;\:]+/',$text);
         foreach($values as $value)
             if(!empty($value))
-                $carr[] = " ( `bowling-game-info`.`game` LIKE 0x".bin2hex('%'.$value.'%')."
-                            OR `users`.`name` LIKE 0x".bin2hex('%'.$value.'%')."
-                            OR `users`.`surname` LIKE 0x".bin2hex('%'.$value.'%')."
-                          ) ";
-        
+                $carr[] = " ( `bowling-game-info`.`name` LIKE 0x".bin2hex('%'.$value.'%')." "
+                            ." OR `users`.`name` LIKE 0x".bin2hex('%'.$value.'%')." "
+                            ." OR `users`.`surname` LIKE 0x".bin2hex('%'.$value.'%')." ) ";
         $q = $this->db->query("SELECT
             `bowling-game-info`.`game_id`   as `game-id`,
             `bowling-game-info`.`name`      as `game-name`,
@@ -160,7 +158,23 @@ class gamesModel extends CI_Model {
 WHERE ( ".(count($carr) ? implode(' OR ',$carr) : " 1 ")." ) LIMIT 20");
         return $q->result_array();
     }
-    
+
+    public function deleteGameFromUser($user_id) {
+        $this->db->query(" delete from `bowling-game` where (
+                                select 1 from `game-user`
+                                    where `game-user`.`user` = '".$user_id."'
+                                    AND `game-user`.`game` = `bowling-game`.`game_id`
+                                LIMIT 1
+                   )");
+        $this->db->query(" delete from `bowling-game-info` where (
+                                select 1 from `game-user`
+                                    where `game-user`.`user` = '".$user_id."'
+                                    AND `game-user`.`game` = `bowling-game-info`.`game_id`
+                                LIMIT 1
+                   )");
+        $this->db->query(" delete from `game-user` where `game-user`.`user` = '".$user_id."' ");
+        return true;
+    }
 
 }
 

@@ -7,12 +7,13 @@ class Users extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('UsersModel');
+        $this->load->model('usersModel');
+        $this->load->model('gamesModel');
         $this->load->library('captcha_lib');
     }
 
     public function allUsers() {
-        $data['allUsers'] = $this->UsersModel->GetAllUsers();
+        $data['allUsers'] = $this->usersModel->GetAllUsers();
 
         $name = 'pages/allUsers';
 
@@ -29,7 +30,7 @@ class Users extends CI_Controller {
 
             $this->display_lib->usersPage($data, $name);
         } else {
-            $this->form_validation->set_rules($this->UsersModel->fieldRules);
+            $this->form_validation->set_rules($this->usersModel->fieldRules);
 
             $val_res = $this->form_validation->run();
 
@@ -47,7 +48,7 @@ class Users extends CI_Controller {
                     $nick = $this->input->post('nick');
 
                     $this->display_lib->usersPage(array('info' => 'Succes'), 'info');
-                    $this->UsersModel->addNew(array(
+                    $this->usersModel->addNew(array(
                         'name' => $name,
                         'surname' => $surname,
                         'nick' => $nick
@@ -55,7 +56,7 @@ class Users extends CI_Controller {
                     redirect('/users/all', 'localtion', 302);
                 } else {
                     $data['imgcode'] = $this->captcha_lib->captcha_actions();
-                    $data['info'] = 'nui corec';
+                    $data['info'] = 'nui corect';
                     $name = 'pages/field';
                     $this->display_lib->usersPage($data, $name);
                 }
@@ -70,7 +71,7 @@ class Users extends CI_Controller {
 
     public function show($id) {
         $data = array();
-        $data ['main_info'] = $this->UsersModel->get($id);
+        $data ['main_info'] = $this->usersModel->get($id);
 
         if ($id) {
 
@@ -91,11 +92,9 @@ class Users extends CI_Controller {
      * @param int $user_id delete user for id
      */
     public function userRemove($user_id) {
-        $this->UsersModel->delete($user_id);
+        $this->gamesModel->deleteGameFromUser($user_id);
         // remove games with links to this user
-        // TODO
-        // games model remove links
-        // TODO
+        $this->usersModel->delete($user_id);
         redirect('users/all', 'localtion', 302);
     }
 
@@ -103,13 +102,13 @@ class Users extends CI_Controller {
      * @param int $id  edit users for id 
      */
     public function edit($id) {
-        $data['main_info'] = $this->UsersModel->get($id);
+        $data['main_info'] = $this->usersModel->get($id);
 
         if (!empty($data['main_info']) && isset($_POST['edit'])) {
-            $this->form_validation->set_rules($this->UsersModel->contactEditRules);
+            $this->form_validation->set_rules($this->usersModel->contactEditRules);
             $val_res = $this->form_validation->run();
             if ($val_res == TRUE) {
-                $this->UsersModel->edit($id, array(
+                $this->usersModel->edit($id, array(
                     'name' => $this->input->post('name'),
                     'surname' => $this->input->post('surname'),
                     'nick' => $this->input->post('nick')
