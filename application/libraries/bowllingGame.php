@@ -33,7 +33,6 @@ class BowllingGame {
      * @return boolean he check game id was specified then it dates from bd
      */
     public function getData() {
-
         if (!$this->game_id)
             return false;
         $data = $this->gamesModel->getData($this->game_id);
@@ -41,12 +40,15 @@ class BowllingGame {
     }
 
     /**
+     * upadate the referensed array &players and add info about
+     *   users' state in $currentRound
+     * the function calcs for each users nr. of throws and sum
      * 
-     * @param array $data data user
-     * @param type $currentRound grup date users 
-     * @param array $players selec list users in game
+     * @param  array $data data user
+     * @param  type  $currentRound grup date users 
+     * @param  array $players selec list users in game
      * @param  $usersInGame data users in game
-     * @return type check if current round is completed
+     * @return bool  true if current round is completed
      */
     function completedCheck($data, $currentRound, &$players, $usersInGame) {
         $players_all = array();
@@ -85,8 +87,9 @@ class BowllingGame {
         return $completed && $roundHaveData && count($players) == count($players_all);
     }
 
-    /*
-     * detect if player already used
+    /**
+     * count how many arrays in array
+     * $data have elements with key = $key, equal to value $value
      */
 
     public function checkF($data, $key, $value) {
@@ -99,7 +102,8 @@ class BowllingGame {
     }
 
     /**
-     *  check if the user can push data in current round
+     * return number of throws and sum of throws of player $player
+     * in round $currentRound
      */
     public function dataCheck($data, $player, $currentRound) {
         $r = array(
@@ -115,10 +119,13 @@ class BowllingGame {
     }
 
     /**
+     * wihout arguments this function return current game status
+     * with arguments this function will push data in game if 
+     * game's state and pushed data will be validated
      * 
-     * @param int $val
-     * @param boolean $player
-     * @param array $usersInGame get data about game score
+     * @param int       $val         <optional>
+     * @param boolean   $player      <optional>
+     * @param array     $usersInGame <optional> get data about game score
      * @return boolean
      */
     public function pushData($val = false, $player = false, $usersInGame = false) {

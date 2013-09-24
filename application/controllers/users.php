@@ -14,7 +14,7 @@ class Users extends CI_Controller {
 
     public function allUsers() {
         $data['allUsers'] = $this->usersModel->GetAllUsers();
-
+       
         $name = 'pages/allUsers';
 
         $this->display_lib->usersPage($data, $name);
@@ -118,6 +118,13 @@ class Users extends CI_Controller {
         }
 
         $this->display_lib->usersPage($data, 'pages/edit');
+    }
+    
+    function get_user()
+    {
+        $id=$this->input->post('users1');
+        $users2= $this->load->model->exportDataJson($id);
+        return $users2;
     }
 
 }

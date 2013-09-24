@@ -115,22 +115,25 @@ class gamesModel extends CI_Model {
 
     /**
      * 
-     * @param array $filter
+     * @param mixed $filter
      * @return array
      */
     public function selectInfoArr($filter) {
         $this->db->select(array("game_id", "name", "users", "ctime", "mtime", "round"));
-//        $this->db->where($filter);
-        if (isset($filter["game_id"]))
-            $this->db->like('game_id', $filter['game_id'], 'right');
-        if (isset($filter["ctime"]))
-            $this->db->like('ctime', $filter['ctime'], 'right');
-        if (isset($filter["mtime"]))
-            $this->db->like('mtime', $filter['mtime'], 'right');
-        if (isset($filter["round"]))
-            $this->db->like('round', $filter['round'], 'right');
-        if (isset($filter["name"]))
-            $this->db->like('name', $filter['name'], 'both');
+        if(!is_array($filter)) {
+            $this->db->where('game_id',$filter);
+        } else {
+            if (isset($filter["game_id"]))
+                $this->db->like('game_id', $filter['game_id'], 'right');
+            if (isset($filter["ctime"]))
+                $this->db->like('ctime', $filter['ctime'], 'right');
+            if (isset($filter["mtime"]))
+                $this->db->like('mtime', $filter['mtime'], 'right');
+            if (isset($filter["round"]))
+                $this->db->like('round', $filter['round'], 'right');
+            if (isset($filter["name"]))
+                $this->db->like('name', $filter['name'], 'both');
+        }
         // TODO user links table
         // if (isset($filter["users"]))
         //     $this->db->like('users', $filter['users'], 'both');
@@ -138,7 +141,13 @@ class gamesModel extends CI_Model {
         $query = $this->db->get($this->tableInfo);
         return $query->result_array();
     }
-    
+    /**
+     * This function seach games by a search string
+     * it searchs in users' name, users' surname and in game's name
+     * 
+     * @param   string $text
+     * @return  array
+     */
     public function selectInfoArrBySearch($text) {
         $carr   = array();
         $values = preg_split('/[\s\.\,\;\:]+/',$text);
@@ -158,7 +167,16 @@ class gamesModel extends CI_Model {
 WHERE ( ".(count($carr) ? implode(' OR ',$carr) : " 1 ")." ) LIMIT 20");
         return $q->result_array();
     }
-
+    /**
+     * Deleting a user from Database structure
+     * ( if we use CASCADE [ with foreign keys.. ]
+     *   the user will be delete also another
+     *   users that played as competitors in same games
+     *  )
+     * 
+     * @param type $user_id
+     * @return boolean
+     */
     public function deleteGameFromUser($user_id) {
         $this->db->query(" delete from `bowling-game` where (
                                 select 1 from `game-user`
@@ -173,6 +191,49 @@ WHERE ( ".(count($carr) ? implode(' OR ',$carr) : " 1 ")." ) LIMIT 20");
                                 LIMIT 1
                    )");
         $this->db->query(" delete from `game-user` where `game-user`.`user` = '".$user_id."' ");
+        return true;
+    }
+    
+    
+    public function getDataGrouped($game_id) {
+        $r  = array(
+            'game-id'   => $game_id,
+            'game-info' => array(),
+            'users'     => array()
+        );
+        // get game info
+        $k = $this->selectInfoArr($game_id);
+        if(count($k))
+            $r['game-info'] = $k[0];
+        // get game data
+        $data   = $this->getData($game_id);
+        // group game_data by users_id
+        foreach($data as $v) {
+            // check if users is added in $r array
+            if(!isset($r['users'][$v['user_id']])) {
+                $r['users'][$v['user_id']]  = array(
+                    'user-id'   => $v['user_id'],
+                    'user-info' => array(),
+                    'user-data' => array()
+                );
+                // get user data
+                $r['users'][$v['user_id']]['user-info'] = $this->usersModel->get($v['user_id']);
+            }
+            $k = $v;
+            unset($k['game_id']);
+            unset($k['user_id']);
+            $r['users'][$v['user_id']]['user-data'][]   = $k;
+        }
+        return $r;
+    }
+    
+    public function insertGameFromArrayStruct($data) {
+        if(!is_array($data)) return false;
+        // check array structure if is valid
+        // TODO ...
+        
+        // insert array in db Tables
+        // TODO ...
         return true;
     }
 

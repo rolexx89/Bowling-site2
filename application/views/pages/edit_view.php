@@ -41,5 +41,24 @@
                 </div>
             </div>
         </form>
+        <script type="text/javascript">
+        $(document).ready(function () {
+        $('#drop1').change(function(){
+            $.ajax({
+            type :"POST",
+            url:base_url,
+            data:"idislajs="+dato,success:function(msg){
+                $("#idmunicipio").empty().removeAttr("disabled").append(msg);
+                callback();
+            }
+          //  $.post(function(data){
+           // $('#show').html(data);
+        });
+        });
+        });
+        </script>
+        <a id="show" style="cursor: pointer"> show </a>
+        <div id="show"> </div>
+        
     </div>
 </div>

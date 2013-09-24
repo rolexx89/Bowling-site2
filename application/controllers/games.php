@@ -257,7 +257,6 @@ class Games extends CI_Controller {
 
     public function filteredData() {
         header("Content-type: text/plain; charset=utf-8", true);
-        // var_dump($_POST);
         if (!isset($_POST["selectKey"]) || !isset($_POST["listFilter"]) || !isset($_POST["valCurr"])) {
             echo "false";
         } else {
@@ -282,7 +281,7 @@ class Games extends CI_Controller {
 
     public function filteredDataSimple() {
         header("Content-type: text/plain; charset=utf-8", true);
-        // var_dump($_POST);
+        // the value thar is included in search
         if (!isset($_POST["valCurr"])) {
             echo "false";
         } else {
@@ -291,7 +290,9 @@ class Games extends CI_Controller {
             );
             $data = array();
             foreach ($list as $item)
+                // buiding the respons structure
                 $data[] = $item['game-name'].', '.$item['user-name'].' '.$item['user-surname'];
+            // returning the respone object
             echo json_encode(
                     array(
                         "arr" => $data,
@@ -301,6 +302,67 @@ class Games extends CI_Controller {
             );
         }
         exit;
+    }
+    
+    public function exportData($game_id, $type = 'json') {
+        header('Content-type: application/json',true);
+        header('Content-Disposition: attachment; filename="GameContent-'.intval($game_id).'.'.$type.'"');
+        $data   = $this->gamesModel->getDataGrouped($game_id);
+        switch($type) {
+            case 'xml':
+                $xml = new SimpleXMLElement("<?xml version=\"1.0\"?><game></game>");
+                /**
+                 * Recursive function that iterate trough array elements
+                 * and is pushing nodes ..
+                 * if the array element is an another array it just opens a node an iterates through array child
+                 *      $ch = $c->addChild($k);
+                 * if the array element isn't an array .. it push a node with value
+                 *      $c->addChild($k,$v);
+                 * 
+                 * the xml doesn't allow tags with name <[number]> so we fixed this adding prefix '_'               
+                 */
+                $f = function($f,$c,$a){
+                    foreach($a as $k => $v) {
+                        if(is_numeric($k)) $k = '_'.$k;
+                        if(is_array($v)) {
+                            $ch=$c->addChild($k);
+                            $f($f,$ch,$v);
+                        } else
+                            $c->addChild($k,$v);
+                    }                    
+                };
+                $f($f,$xml,$data);
+                // export xmlObject as String
+                echo $xml->asXML();
+            break;
+            default:
+            case 'json':
+                echo json_encode($data);
+            break;
+        }
+        exit;
+    }
+    
+    public function importData() {
+        header("Content-Type: text/plain; charset=utf-8",true);
+        if( !empty($_FILES['importContent'])
+            && is_array($_FILES['importContent'])
+            && empty($_FILES['importContent']['error']) ) {
+            $content    = file_get_contents($_FILES['importContent']['tmp_name']);
+            $data       = false;
+            if($content[0] == '{') {
+                // is json content
+                $data   = json_decode($content,true);
+            } else if( $content[0] == '<' ) {
+                // is xml content
+                // .. decode xml with xml simple
+            }
+            $status = false;
+            if(!empty($data))
+                $status = $this->gamesModel->insertGameFromArrayStruct($data);
+            
+            echo $status ? 'OK' : 'NONE';
+       }
     }
 
 }

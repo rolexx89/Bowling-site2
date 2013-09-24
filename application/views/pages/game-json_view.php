@@ -20,13 +20,17 @@ if (isset($currentGameData['game-status'])) {
         <input type="hidden" class="new-url-replace" value="/games/show/<?= $currentGameData['game']->getGameId(); ?>" />
         <div>   Name Games - <?php echo htmlspecialchars($currentGameData['gameInfo']['name']); ?> 
         </div>
+        
+        <a href="/games/exportdata/<?= $currentGameData['game']->getGameId(); ?>">export game in JSON</a>
+        <a href="/games/exportdata/<?= $currentGameData['game']->getGameId(); ?>/xml">export game in XML</a>        
+        <br />
         <div class="g">
             <?php
         }
 
         $userNext = false;
         if ($currentGameData['game-data-grouped']['users']) {
-            ?>   
+            ?>
             <div class="gamess">Game #<?= $currentGameData['game']->getGameId(); ?></div>
 
             <?php

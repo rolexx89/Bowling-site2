@@ -123,6 +123,29 @@ class usersModel extends CI_Model {
         $data = $query->result_array();
         return ( empty($data) ? false : $data[0] );
     }
+    public function exportDataJson($user_id) {
+       $this->db->where('id', $user_id);
+       $rel =  $query = $this->db->get($this->table);
+        
+        if($rel->num_row!=0)
+        {
+            
+            $user=array();    
+            foreach ($rel->result_array() as $row)
+            {
+                $user[]=  array(
+                   'id'=>$row['id'],
+                    'user'=>$row['user']
+                    
+                    
+                );
+            }
+        return $user;}
+        else {
+            return FALSE;
+        }
+            echo json_encode ($getData);
+    }
 
 }
 
